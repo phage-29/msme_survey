@@ -108,36 +108,56 @@ $(document).ready(function () {
   }
 
   /**
+   * ajax form
+   */
+  $(".ajax-form").submit(function (e) {
+    e.preventDefault();
+    Swal.fire({
+      title: "Loading",
+      html: "Please wait...",
+      allowOutsideClick: false,
+      didOpen: function () {
+        Swal.showLoading();
+      },
+    });
+
+    var formData = $(this).serialize();
+
+    $.ajax({
+      type: "POST",
+      url: "assets/components/includes/process.php",
+      data: formData,
+      dataType: "json",
+      success: function (response) {
+        setTimeout(function () {
+          Swal.fire({
+            icon: response.status,
+            title: response.message,
+            showConfirmButton: false,
+            timer: 1000,
+          }).then(function () {
+            if (response.redirect) {
+              window.location.href = response.redirect;
+            }
+            if (response.reload) {
+              window.reload();
+            }
+          });
+        }, 1000);
+      },
+    });
+  });
+
+  /**
    * Initiate tooltips
    */
   $('[data-bs-toggle="tooltip"]').tooltip();
 
   /**
-   * Initiate Bootstrap validation check
-   */
-  $(".needs-validation").on("submit", function (event) {
-    var form = $(this)[0];
-    if (!form.checkValidity()) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-
-    form.classList.add("was-validated");
-  });
-
-  /**
-   * Initiate Datatables
-   */
-  let options = { responsive: true };
-  $(".datatable").each(function () {
-    new DataTable($(this).get(0), options);
-  });
-
-  /**
    * List of provinces
    */
   $.ajax({
-    url: "assets/includes/fetch.php",
+    url: "assets/components/includes/fetch.php",
     type: "POST",
     data: {
       get_provinces: true,
@@ -158,32 +178,21 @@ $(document).ready(function () {
   /**
    * List of business names
    */
-  $("#business_name").on("keydown", function () {
+  $("#province_id").on("change", function () {
     var province_id = $("#province_id").val();
-    var business_name = $(this).val();
-    if (business_name !== "") {
-      $.ajax({
-        url: "assets/includes/fetch.php",
-        method: "POST",
-        data: {
-          province_id: province_id,
-          business_name: business_name,
-          get_business_names: true,
-        },
-        dataType: "json",
-        success: function (response) {
-          var len = response.length;
-          $("#suggestions").empty();
-          for (var i = 0; i < len; i++) {
-            var business_name = response[i]["business_name"];
-            $("#suggestions").append(
-              '<li class="list-group-item" style="cursor:pointer" onclick="business_name.value = \'' + business_name + '\';suggestions.innerHTML = \'\'">' + business_name + '</li>'
-            );
-          }
-        },
-      });
-    } else {
-      $("#suggestions").empty();
-    }
+    $.ajax({
+      url: "assets/components/includes/fetch.php",
+      method: "POST",
+      data: {
+        province_id: province_id,
+        get_business_names: true,
+      },
+      dataType: "json",
+      success: function (response) {
+        $("#business_name").autocomplete({
+          source: response,
+        });
+      },
+    });
   });
 });

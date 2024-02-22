@@ -1,5 +1,5 @@
 <?php
-require_once "assets/includes/session.php";
+require_once "assets/components/includes/session.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -8,7 +8,9 @@ require_once "assets/includes/session.php";
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-  <title><?= $page ?></title>
+  <title>
+    <?= $page ?>
+  </title>
   <meta content="" name="description" />
   <meta content="" name="keywords" />
 
@@ -19,17 +21,19 @@ require_once "assets/includes/session.php";
   <!-- Vendor CSS Files -->
   <?php
   if ($protected) {
-  ?>
+    ?>
     <link href="assets\node_modules\apexcharts\dist\apexcharts.css" rel="stylesheet" />
     <link href="assets\node_modules\datatables\datatables.css" rel="stylesheet">
-  <?php
+    <?php
   }
   ?>
   <link href="assets\node_modules\bootstrap\dist\css\bootstrap.min.css" rel="stylesheet" />
   <link href="assets\node_modules\bootstrap-icons\font\bootstrap-icons.css" rel="stylesheet" />
+  <link href="assets\node_modules\jquery-ui\dist\themes\base\jquery-ui.min.css" rel="stylesheet" />
 
   <!-- Vendor CSS Files -->
   <script src="assets\node_modules\jquery\dist\jquery.min.js"></script>
+  <script src="assets\node_modules\jquery-ui\dist\jquery-ui.min.js"></script>
   <script src="assets\node_modules\sweetalert2\dist\sweetalert2.all.js"></script>
   <script src="assets\node_modules\qrcodejs\qrcode.js"></script>
 

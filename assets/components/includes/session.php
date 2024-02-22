@@ -1,5 +1,5 @@
 <?php
-require_once 'assets/includes/conn.php';
+require_once 'assets/components/includes/conn.php';
 
 ini_set('session.cookie_secure', 1);
 ini_set('session.cookie_httponly', 1);
@@ -11,7 +11,7 @@ if ($protected == true) {
         if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 1800)) {
             session_unset();
             session_destroy();
-            header('Location: assets/includes/logout.php');
+            header('Location: assets/components/includes/logout.php');
             exit();
         }
 
@@ -29,7 +29,7 @@ if ($protected == true) {
             $acc = $result->fetch_object();
             $_SESSION['role'] = $acc->role;
         } else {
-            header('Location: assets/includes/logout.php');
+            header('Location: assets/components/includes/logout.php');
             exit();
         }
     } else {

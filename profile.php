@@ -1,9 +1,9 @@
 <?php
 $page = "Profile";
 $protected = true;
-require_once("assets/templates/header.php");
-require_once("assets/templates/topbar.php");
-require_once("assets/templates/sidebar.php");
+require_once("assets/components/templates/header.php");
+require_once("assets/components/templates/topbar.php");
+require_once("assets/components/templates/sidebar.php");
 ?>
 <main id="main" class="main">
 
@@ -299,6 +299,6 @@ require_once("assets/templates/sidebar.php");
 
 </main><!-- End #main -->
 <?php
-require_once("assets/templates/modals.php");
-require_once("assets/templates/footer.php");
+require_once("assets/components/templates/modals.php");
+require_once("assets/components/templates/footer.php");
 ?>

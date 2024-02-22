@@ -10,6 +10,7 @@
     "datatables": "^1.10.18",
     "fullcalendar": "^6.1.10",
     "jquery": "^3.7.1",
+    "jquery-ui": "^1.13.2",
     "qrcode": "^1.5.3",
     "qrcodejs": "^1.0.0",
     "sweetalert2": "^11.10.5"

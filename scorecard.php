@@ -1,7 +1,7 @@
 <?php
 $page = "Register";
 $protected = false;
-require_once("assets/templates/header.php");
+require_once("assets/components/templates/header.php");
 ?>
 <main>
   <div class="container">
@@ -65,5 +65,5 @@ require_once("assets/templates/header.php");
   </div>
 </main><!-- End #main -->
 <?php
-require_once("assets/templates/footer.php");
+require_once("assets/components/templates/footer.php");
 ?>

@@ -4,8 +4,8 @@ define('servername', 'localhost');
 define('username', 'root');
 define('password', 'Password@123!');
 define('dbname', 'midb');
-
 define('website', 'Market Intelligence');
+define('secret_key', 'marketintel');
 
 $conn = new mysqli(servername, username, password, dbname);
 

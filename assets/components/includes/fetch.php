@@ -19,13 +19,23 @@ if (isset($_POST['get_provinces'])) {
 
 if (isset($_POST['get_business_names'])) {
     $province_id = validate('province_id', $conn);
-    $business_name = strtolower(validate('business_name', $conn));
 
-    $query = "SELECT * FROM msmes WHERE province_id = ? AND business_name LIKE ?";
-    $result = $conn->execute_query($query, [$province_id, '%' . $business_name . '%']);
+    $query = "SELECT * FROM msmes WHERE province_id = ?";
+    $result = $conn->execute_query($query, [$province_id]);
 
     while ($row = $result->fetch_object()) {
-        $response[] = $row;
+        $response[] = $row->business_name;
+    }
+}
+
+if (isset($_GET['uuid'])) {
+    $province_id = validate('province_id', $conn);
+
+    $query = "SELECT * FROM msmes WHERE province_id = ?";
+    $result = $conn->execute_query($query, [$province_id]);
+
+    while ($row = $result->fetch_object()) {
+        $response[] = $row->business_name;
     }
 }
 
