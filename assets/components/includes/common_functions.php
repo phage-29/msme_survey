@@ -29,13 +29,18 @@ function sendEmail($sendTo, $subject, $content)
 }
 function validate($key, $conn)
 {
-    if (isset($_POST[$key]) && is_string($_POST[$key]) && trim($_POST[$key]) !== '') {
-
-        return $conn->real_escape_string(htmlspecialchars(trim($_POST[$key]), ENT_QUOTES, 'UTF-8'));
-    } else {
-        return null;
+    if (isset($_POST[$key])) {
+        if (is_string($_POST[$key])) {
+            $value = trim($_POST[$key]);
+            if ($value !== '') {
+                return $conn->real_escape_string($value);
+            }
+        }
     }
+
+    return null;
 }
+
 
 function encryptID($id, $key)
 {
