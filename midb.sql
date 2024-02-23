@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
 --
 -- Host: localhost    Database: midb
 -- ------------------------------------------------------
--- Server version	8.0.35
+-- Server version	8.0.36
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -14,6 +14,38 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `assessment_monitoring`
+--
+
+DROP TABLE IF EXISTS `assessment_monitoring`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `assessment_monitoring` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `msme_id` int DEFAULT NULL,
+  `success_factor` tinyint DEFAULT NULL,
+  `swot` tinyint DEFAULT NULL,
+  `competitive_feature` tinyint DEFAULT NULL,
+  `scorecard` tinyint DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `assessment_tracker_msme_idx` (`msme_id`),
+  CONSTRAINT `assessment_tracker_msme` FOREIGN KEY (`msme_id`) REFERENCES `msmes` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `assessment_monitoring`
+--
+
+LOCK TABLES `assessment_monitoring` WRITE;
+/*!40000 ALTER TABLE `assessment_monitoring` DISABLE KEYS */;
+INSERT INTO `assessment_monitoring` VALUES (4,1,1,NULL,NULL,1,'2024-02-23 01:55:45','2024-02-23 02:38:11'),(5,2,1,NULL,NULL,1,'2024-02-23 02:27:11','2024-02-23 02:38:11');
+/*!40000 ALTER TABLE `assessment_monitoring` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `assessment_types`
@@ -166,6 +198,31 @@ INSERT INTO `industry_clusters` VALUES (1,'PFN'),(2,'Wearables and Homestyle'),(
 UNLOCK TABLES;
 
 --
+-- Table structure for table `major_business_activities`
+--
+
+DROP TABLE IF EXISTS `major_business_activities`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `major_business_activities` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `major_business_activity` varchar(150) DEFAULT NULL,
+  `major_business_activity_desc` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `major_business_activities`
+--
+
+LOCK TABLES `major_business_activities` WRITE;
+/*!40000 ALTER TABLE `major_business_activities` DISABLE KEYS */;
+INSERT INTO `major_business_activities` VALUES (1,'Manufacturing/Producing',NULL),(2,'Retailing/Trading',NULL),(3,'Service',NULL),(4,'Wholesaling/Trading',NULL),(5,'Exporting',NULL),(6,'Importing',NULL);
+/*!40000 ALTER TABLE `major_business_activities` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `msmes`
 --
 
@@ -181,21 +238,24 @@ CREATE TABLE `msmes` (
   `last_name` varchar(150) DEFAULT NULL,
   `phone` varchar(150) DEFAULT NULL,
   `province_id` int DEFAULT NULL,
-  `industry_cluster` int DEFAULT NULL,
+  `industry_cluster_id` int DEFAULT NULL,
   `business_name` varchar(150) DEFAULT NULL,
-  `edt_level` int DEFAULT NULL,
+  `major_business_activity_id` int DEFAULT NULL,
+  `edt_level_id` int DEFAULT NULL,
   `asset_size_id` int DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `msme_users_idx` (`user_id`),
   KEY `msme_province_idx` (`province_id`),
-  KEY `msme_industry_cluster_idx` (`industry_cluster`),
-  KEY `msme_edt_level_idx` (`edt_level`),
+  KEY `msme_industry_cluster_idx` (`industry_cluster_id`),
+  KEY `msme_edt_level_idx` (`edt_level_id`),
   KEY `msme-assets-size_idx` (`asset_size_id`),
+  KEY `msme_major_business_activity_idx` (`major_business_activity_id`),
   CONSTRAINT `msme-assets-size` FOREIGN KEY (`asset_size_id`) REFERENCES `asset_sizes` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `msme_edt_level` FOREIGN KEY (`edt_level`) REFERENCES `edt_levels` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `msme_industry_cluster` FOREIGN KEY (`industry_cluster`) REFERENCES `industry_clusters` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `msme_edt_level` FOREIGN KEY (`edt_level_id`) REFERENCES `edt_levels` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `msme_industry_cluster` FOREIGN KEY (`industry_cluster_id`) REFERENCES `industry_clusters` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `msme_major_business_activity` FOREIGN KEY (`major_business_activity_id`) REFERENCES `major_business_activities` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `msme_province` FOREIGN KEY (`province_id`) REFERENCES `provinces` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `msme_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
@@ -207,7 +267,7 @@ CREATE TABLE `msmes` (
 
 LOCK TABLES `msmes` WRITE;
 /*!40000 ALTER TABLE `msmes` DISABLE KEYS */;
-INSERT INTO `msmes` VALUES (1,1,NULL,'Dan Alfrei','Celestial','Fuerte','09818098637',6,NULL,'dois coffee',NULL,NULL,'2024-02-19 14:30:33','2024-02-19 14:30:33'),(2,1,NULL,'Dan','Cel','Fue','091234567890',6,NULL,'MJ Furnitures',NULL,NULL,'2024-02-19 15:29:13','2024-02-19 15:29:13');
+INSERT INTO `msmes` VALUES (1,1,NULL,'Dan Alfrei','Celestial','Fuerte','09818098637',6,NULL,'dois coffee',NULL,NULL,NULL,'2024-02-19 14:30:33','2024-02-19 14:30:33'),(2,1,NULL,'Dan','Cel','Fue','091234567890',6,NULL,'MJ Furnitures',NULL,NULL,NULL,'2024-02-19 15:29:13','2024-02-19 15:29:13');
 /*!40000 ALTER TABLE `msmes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -231,7 +291,7 @@ CREATE TABLE `provinces` (
 
 LOCK TABLES `provinces` WRITE;
 /*!40000 ALTER TABLE `provinces` DISABLE KEYS */;
-INSERT INTO `provinces` VALUES (1,'Iloilo Regional Office'),(2,'Aklan Provincial Office'),(3,'Antique Provincial Office'),(4,'Capiz Provincial Office'),(5,'Guimaras Provincial Office'),(6,'Iloilo Provincial Office'),(7,'Negros Occidental Provincial Office');
+INSERT INTO `provinces` VALUES (1,'Aklan'),(2,'Antique'),(3,'Capiz'),(4,'Guimaras'),(5,'Iloilo'),(6,'Negros Occidental');
 /*!40000 ALTER TABLE `provinces` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -430,4 +490,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-02-20  9:02:48
+-- Dump completed on 2024-02-23 17:00:35

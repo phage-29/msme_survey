@@ -5,6 +5,7 @@ require_once("assets/components/templates/header.php");
 require_once("assets/components/templates/topbar.php");
 require_once("assets/components/templates/sidebar.php");
 ?>
+
 <main id="main" class="main">
 
   <div class="pagetitle">
@@ -39,7 +40,7 @@ require_once("assets/components/templates/sidebar.php");
 
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">Competitors Features</h5>
+            <h5 class="card-title">Competitive Features</h5>
             <p>This is an examle page with no contrnt. You can use it as a starter for your custom pages.</p>
           </div>
         </div>

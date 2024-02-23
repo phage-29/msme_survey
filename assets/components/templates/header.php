@@ -1,6 +1,3 @@
-<?php
-require_once "assets/components/includes/session.php";
-?>
 <!DOCTYPE html>
 <html lang="en">
 

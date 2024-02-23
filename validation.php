@@ -1,6 +1,8 @@
 <?php
 $page = "Login";
 $protected = false;
+require_once("assets/components/includes/common_functions.php");
+require_once("assets/components/includes/conn.php");
 require_once("assets/components/templates/header.php");
 ?>
 <main>

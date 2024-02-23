@@ -19,12 +19,24 @@ if (isset($_POST['msme_validation'])) {
 
     $query = "SELECT * FROM msmes WHERE province_id = ? AND business_name = ?";
     $result = $conn->execute_query($query, [$province_id, $business_name]);
+
     if ($result->num_rows) {
-        $response = [
-            'status' => 'success',
-            'message' => 'MSME validated!',
-            'redirect' => 'validation.php?id=' . encryptID(1, secret_key)
-        ];
+        while ($row = $result->fetch_object()) {
+            $msme_id = $row->id;
+            $query = "SELECT * FROM assessment_monitoring WHERE msme_id=?";
+            $assessment_result = $conn->execute_query($query, [$msme_id]);
+
+            if ($assessment_result->num_rows == 0) {
+                $insert_query = "INSERT INTO assessment_monitoring(`msme_id`, `success_factor`) VALUES(?, 1)";
+                $insert_result = $conn->execute_query($insert_query, [$msme_id]);
+            }
+
+            $response = [
+                'status' => 'success',
+                'message' => 'MSME validated!',
+                'redirect' => 'assessment.php?ref=' . encryptID($msme_id, secret_key)
+            ];
+        }
     } else {
         $response = [
             'status' => 'warning',
@@ -32,6 +44,7 @@ if (isset($_POST['msme_validation'])) {
         ];
     }
 }
+
 
 $responseJSON = json_encode($response);
 
