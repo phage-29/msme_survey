@@ -14,13 +14,12 @@ if ($protected) {
 
 
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-    <!-- Vendor JS Files -->
-    <script src="assets\node_modules\apexcharts\dist\apexcharts.js"></script>
-    <script src="assets\node_modules\datatables\datatables.js"></script>
 <?php
 }
 ?>
+
+<!-- Vendor JS Files -->
+<script src="assets\node_modules\datatables\datatables.js"></script>
 <script src="assets\node_modules\bootstrap\dist\js\bootstrap.bundle.js"></script>
 
 <!-- Template Main JS File -->

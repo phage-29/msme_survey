@@ -41,24 +41,42 @@ function validate($key, $conn)
     return null;
 }
 
-
 function encryptID($id, $key)
 {
-    $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length('aes-256-cbc'));
+    // Generate a random initialization vector (IV) using the key
+    $iv = substr(md5($key), 0, 16);
 
-    $encrypted = openssl_encrypt($id, 'aes-256-cbc', $key, 0, $iv);
+    // Encrypt the ID using AES encryption in CBC mode
+    $encrypted = openssl_encrypt($id, 'AES-256-CBC', $key, 0, $iv);
 
-    return base64_encode($iv . $encrypted);
+    // Encode the encrypted data to make it URL-safe
+    $safeEncoded = base64_encode($encrypted);
+
+    // Split the encoded string into five parts of four characters each
+    $chunks = str_split($safeEncoded, 4);
+
+    // Join the chunks with "-"
+    return implode('-', $chunks);
 }
 
 function decryptID($encrypted, $key)
 {
-    $encrypted = base64_decode($encrypted);
+    // Split the encrypted string into chunks separated by "-"
+    $chunks = explode('-', $encrypted);
 
-    $iv = substr($encrypted, 0, openssl_cipher_iv_length('aes-256-cbc'));
-    $encrypted = substr($encrypted, openssl_cipher_iv_length('aes-256-cbc'));
+    // Concatenate the chunks
+    $safeEncoded = implode('', $chunks);
 
-    $decrypted = openssl_decrypt($encrypted, 'aes-256-cbc', $key, 0, $iv);
+    // Decode the URL-safe encoded string
+    $encrypted = base64_decode($safeEncoded);
+
+    // Generate the initialization vector (IV) using the key
+    $iv = substr(md5($key), 0, 16);
+
+    // Decrypt the data using AES decryption in CBC mode
+    $decrypted = openssl_decrypt($encrypted, 'AES-256-CBC', $key, 0, $iv);
 
     return $decrypted;
 }
+
+

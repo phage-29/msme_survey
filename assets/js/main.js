@@ -148,6 +148,97 @@ $(document).ready(function () {
     });
   });
 
+  $("#privacy-form").submit(function (e) {
+    e.preventDefault();
+
+    var formData = $(this).serialize();
+
+    $.ajax({
+      type: "POST",
+      url: "assets/components/includes/process.php",
+      data: formData,
+      dataType: "json",
+      success: function (response) {
+        $("#privacyModal").modal("hide");
+      },
+    });
+  });
+
+  $("#sfa-form").submit(function (e) {
+    e.preventDefault();
+    // Swal.fire({
+    //   title: "Loading",
+    //   html: "Please wait...",
+    //   allowOutsideClick: false,
+    //   didOpen: function () {
+    //     Swal.showLoading();
+    //   },
+    // });
+
+    $.ajax({
+      type: "POST",
+      url: "assets/components/includes/process.php",
+      data: {
+        "ref": $('#ref').val(),
+        "sfa_complete": "",
+      },
+      dataType: "json",
+      success: function (response) {
+        window.location.href = response.redirect;
+      },
+    });
+  });
+
+  $("#saa-form").submit(function (e) {
+    e.preventDefault();
+    // Swal.fire({
+    //   title: "Loading",
+    //   html: "Please wait...",
+    //   allowOutsideClick: false,
+    //   didOpen: function () {
+    //     Swal.showLoading();
+    //   },
+    // });
+
+    $.ajax({
+      type: "POST",
+      url: "assets/components/includes/process.php",
+      data: {
+        "ref": $('#ref').val(),
+        "saa_complete": "",
+      },
+      dataType: "json",
+      success: function (response) {
+        window.location.href = response.redirect;
+      },
+    });
+  });
+
+  $("#scf-form").submit(function (e) {
+    e.preventDefault();
+    // Swal.fire({
+    //   title: "Loading",
+    //   html: "Please wait...",
+    //   allowOutsideClick: false,
+    //   didOpen: function () {
+    //     Swal.showLoading();
+    //   },
+    // });
+
+    $.ajax({
+      type: "POST",
+      url: "assets/components/includes/process.php",
+      data: {
+        "ref": $('#ref').val(),
+        "cfa_complete": "",
+      },
+      dataType: "json",
+      success: function (response) {
+        window.location.href = response.redirect;
+      },
+    });
+  });
+
   /**
    * Initiate tooltips
    */
