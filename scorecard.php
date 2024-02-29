@@ -341,7 +341,7 @@ LEFT JOIN sfsms s ON r.sfsm_id = s.id WHERE s.sfm_id = $row->id AND r.msme_id = 
   </div>
   <div class="d-print-block d-none" style="font-size: 1rem">
     <div class="row">
-      <p class="text-center mb-3 h4">MSME COMPETITIVE ADVANTAGE SCORECARD</p>
+      <p class="text-center mb-3 h4"><strong>MSME COMPETITIVE ADVANTAGE SCORECARD</strong></p>
       <div class="col-6">
         <p class="h5"><strong>Profile</strong></p>
         <br>
@@ -487,7 +487,9 @@ FROM sfms WHERE sfms.id = $row->id");
           ?>
           <strong>
             <?= $row->sfm ?>
-            <span class="float-end">Average: <?= number_format($get_avg->chart_data, '2') ?>%</span>
+            <span class="float-end">Average:
+              <?= number_format($get_avg->chart_data, '2') ?>%
+            </span>
           </strong>
           <table class="table table-striped border border-1 small">
             <thead>
