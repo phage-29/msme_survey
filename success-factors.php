@@ -73,27 +73,27 @@ require_once("assets/components/templates/sidebar.php");
                           <div class="col-1"></div>
                           <div class="col-2 small ps-lg-5">
                             <input type="radio" name="<?= $row2->sfsm_code ?>" class="form-check-input"
-                              onclick="return sfa(<?= $row->id ?>,<?= $row2->id ?>,<?= $msme_id ?>,5)" style="scale: 2.5;"
+                              onclick="return sfa(<?= $row->id ?>,<?= $row2->id ?>,<?= $msme_id ?>,5)" style="scale: 1.75;"
                               <?= $conn->query("SELECT * FROM responses WHERE sfm_id=$row->id and sfsm_id=$row2->id and msme_id=$msme_id and value = 5")->num_rows ? 'checked' : '' ?> required />
                           </div>
                           <div class="col-2 small ps-lg-5">
                             <input type="radio" name="<?= $row2->sfsm_code ?>" class="form-check-input"
-                              onclick="return sfa(<?= $row->id ?>,<?= $row2->id ?>,<?= $msme_id ?>,4)" style="scale: 2.5;"
+                              onclick="return sfa(<?= $row->id ?>,<?= $row2->id ?>,<?= $msme_id ?>,4)" style="scale: 1.75;"
                               <?= $conn->query("SELECT * FROM responses WHERE sfm_id=$row->id and sfsm_id=$row2->id and msme_id=$msme_id and value = 4")->num_rows ? 'checked' : '' ?> />
                           </div>
                           <div class="col-2 small ps-lg-5">
                             <input type="radio" name="<?= $row2->sfsm_code ?>" class="form-check-input"
-                              onclick="return sfa(<?= $row->id ?>,<?= $row2->id ?>,<?= $msme_id ?>,3)" style="scale: 2.5;"
+                              onclick="return sfa(<?= $row->id ?>,<?= $row2->id ?>,<?= $msme_id ?>,3)" style="scale: 1.75;"
                               <?= $conn->query("SELECT * FROM responses WHERE sfm_id=$row->id and sfsm_id=$row2->id and msme_id=$msme_id and value = 3")->num_rows ? 'checked' : '' ?> />
                           </div>
                           <div class="col-2 small ps-lg-5">
                             <input type="radio" name="<?= $row2->sfsm_code ?>" class="form-check-input"
-                              onclick="return sfa(<?= $row->id ?>,<?= $row2->id ?>,<?= $msme_id ?>,2)" style="scale: 2.5;"
+                              onclick="return sfa(<?= $row->id ?>,<?= $row2->id ?>,<?= $msme_id ?>,2)" style="scale: 1.75;"
                               <?= $conn->query("SELECT * FROM responses WHERE sfm_id=$row->id and sfsm_id=$row2->id and msme_id=$msme_id and value = 2")->num_rows ? 'checked' : '' ?> />
                           </div>
                           <div class="col-2 small ps-lg-5">
                             <input type="radio" name="<?= $row2->sfsm_code ?>" class="form-check-input"
-                              onclick="return sfa(<?= $row->id ?>,<?= $row2->id ?>,<?= $msme_id ?>,1)" style="scale: 2.5;"
+                              onclick="return sfa(<?= $row->id ?>,<?= $row2->id ?>,<?= $msme_id ?>,1)" style="scale: 1.75;"
                               <?= $conn->query("SELECT * FROM responses WHERE sfm_id=$row->id and sfsm_id=$row2->id and msme_id=$msme_id and value = 1")->num_rows ? 'checked' : '' ?> />
                           </div>
                           <div class="col-1"></div>

@@ -6,15 +6,14 @@ require_once("assets/components/templates/header.php");
 
 <main>
   <div class="container">
-    <section
-      class="d-print-none section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+    <section class="d-print-none section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-lg-10 col-md-12 align-items-center justify-content-center" style="width: 100%">
             <div class="d-flex justify-content-center py-4">
               <a href="dashboard.php" class="logo d-flex align-items-center w-auto">
                 <img src="assets/img/logo.png" alt="">
-                <span class="d-none d-lg-block">NiceAdmin</span>
+                <span class="d-none d-lg-block"><?= website ?></span>
               </a>
             </div>
             <div class="card mb-3">
@@ -97,7 +96,7 @@ require_once("assets/components/templates/header.php");
                         },
                         dataLabels: {
                           enabled: true,
-                          formatter: function (val) {
+                          formatter: function(val) {
                             return val + "%";
                           },
                         },
@@ -119,8 +118,7 @@ require_once("assets/components/templates/header.php");
                         <div class="row">
 
                           <div class="dropdown d-lg-none">
-                            <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                              aria-expanded="false">
+                            <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                               Success Factor Sub Category
                             </button>
                             <ul class="dropdown-menu">
@@ -128,13 +126,11 @@ require_once("assets/components/templates/header.php");
                                 <?php
                                 $query = $conn->query("SELECT * FROM sfms");
                                 while ($row = $query->fetch_object()) {
-                                  ?>
-                                  <a class="border border-0 list-group-item list-group-item-action <?= $row->id == 2 ? 'active' : '' ?>"
-                                    id="list-<?= $row->sfm_code ?>-list" data-bs-toggle="list"
-                                    href="#list-<?= $row->sfm_code ?>" role="tab">
+                                ?>
+                                  <a class="border border-0 list-group-item list-group-item-action <?= $row->id == 2 ? 'active' : '' ?>" id="list-<?= $row->sfm_code ?>-list" data-bs-toggle="list" href="#list-<?= $row->sfm_code ?>" role="tab">
                                     <?= $row->sfm_code ?>
                                   </a>
-                                  <?php
+                                <?php
                                 }
                                 ?>
                               </div>
@@ -142,18 +138,15 @@ require_once("assets/components/templates/header.php");
                           </div>
 
                           <div class="col-2 d-none d-lg-block">
-                            <div class="list-group" id="list-tab" role="tablist"
-                              style="max-height: 300px; overflow-y:auto;">
+                            <div class="list-group" id="list-tab" role="tablist" style="max-height: 300px; overflow-y:auto;">
                               <?php
                               $query = $conn->query("SELECT * FROM sfms");
                               while ($row = $query->fetch_object()) {
-                                ?>
-                                <a class="list-group-item list-group-item-action <?= $row->id == 2 ? 'active' : '' ?>"
-                                  id="list-<?= $row->sfm_code ?>-list" data-bs-toggle="list"
-                                  href="#list-<?= $row->sfm_code ?>" role="tab">
+                              ?>
+                                <a class="list-group-item list-group-item-action <?= $row->id == 2 ? 'active' : '' ?>" id="list-<?= $row->sfm_code ?>-list" data-bs-toggle="list" href="#list-<?= $row->sfm_code ?>" role="tab">
                                   <?= $row->sfm_code ?>
                                 </a>
-                                <?php
+                              <?php
                               }
                               ?>
                             </div>
@@ -163,43 +156,41 @@ require_once("assets/components/templates/header.php");
                               <?php
                               $query = $conn->query("SELECT * FROM sfms");
                               while ($row = $query->fetch_object()) {
-                                ?>
-                                <div class="tab-pane fade <?= $row->id == 2 ? 'show active' : '' ?>"
-                                  id="list-<?= $row->sfm_code ?>" role="tabpanel"
-                                  aria-labelledby="list-<?= $row->sfm_code ?>-list">
+                              ?>
+                                <div class="tab-pane fade <?= $row->id == 2 ? 'show active' : '' ?>" id="list-<?= $row->sfm_code ?>" role="tabpanel" aria-labelledby="list-<?= $row->sfm_code ?>-list">
                                   <div id="<?= $row->sfm_code ?>columnChart"></div>
                                   <script>
                                     <?php
                                     $query4 = $conn->query("
-SELECT
-sfms.*,
-(
-SELECT
-SUM(a.`value`) / SUM(5) * sfms.`weight`
-FROM
-responses a
-WHERE
-a.`msme_id` = $msme_id
-AND a.`assessment_type_id` = 1
-AND a.`sfm_id` = sfms.id
-) AS total_value,
-(
-(
-SELECT
-SUM(a.`value`) / SUM(5) * sfms.`weight`
-FROM
-responses a
-WHERE
-a.`msme_id` = $msme_id
-AND a.`assessment_type_id` = 1
-AND a.`sfm_id` = sfms.id
-) / sfms.weight
-) * 100 as chart_data
-FROM
-sfms
-WHERE
-sfms.id = $row->id
-");
+                                    SELECT
+                                    sfms.*,
+                                    (
+                                    SELECT
+                                    SUM(a.`value`) / SUM(5) * sfms.`weight`
+                                    FROM
+                                    responses a
+                                    WHERE
+                                    a.`msme_id` = $msme_id
+                                    AND a.`assessment_type_id` = 1
+                                    AND a.`sfm_id` = sfms.id
+                                    ) AS total_value,
+                                    (
+                                    (
+                                    SELECT
+                                    SUM(a.`value`) / SUM(5) * sfms.`weight`
+                                    FROM
+                                    responses a
+                                    WHERE
+                                    a.`msme_id` = $msme_id
+                                    AND a.`assessment_type_id` = 1
+                                    AND a.`sfm_id` = sfms.id
+                                    ) / sfms.weight
+                                    ) * 100 as chart_data
+                                    FROM
+                                    sfms
+                                    WHERE
+                                    sfms.id = $row->id
+                                    ");
                                     $get_avg = $query4->fetch_object();
                                     ?>
                                     var options = {
@@ -207,16 +198,16 @@ sfms.id = $row->id
                                         data: [
                                           <?php
                                           $query2 = $conn->query("
-SELECT
-s.sfsm_code,
-(r.`value` / 5) AS total_value,
-((r.`value` / 5)) * 100 AS perc_value
-FROM 
-responses r
-LEFT JOIN 
-sfsms s ON r.sfsm_id = s.id 
-WHERE 
-s.sfm_id = $row->id AND r.msme_id = $msme_id");
+                                          SELECT
+                                          s.sfsm_code,
+                                          (r.`value` / 5) * s.weight AS total_value,
+                                          ((r.`value` / 5)) * 100 AS perc_value
+                                          FROM 
+                                          responses r
+                                          LEFT JOIN 
+                                          sfsms s ON r.sfsm_id = s.id 
+                                          WHERE 
+                                          s.sfm_id = $row->id AND r.msme_id = $msme_id");
                                           while ($row2 = $query2->fetch_object()) {
                                             echo number_format($row2->perc_value, 5, '.', '') . ",";
                                           }
@@ -232,7 +223,7 @@ s.sfm_id = $row->id AND r.msme_id = $msme_id");
                                       },
                                       tooltip: {
                                         x: {
-                                          formatter: function (val) {
+                                          formatter: function(val) {
                                             return val
                                           }
                                         }
@@ -245,7 +236,7 @@ s.sfm_id = $row->id AND r.msme_id = $msme_id");
                                       },
                                       dataLabels: {
                                         enabled: true,
-                                        formatter: function (val) {
+                                        formatter: function(val) {
                                           return val + "%";
                                         },
                                         offsetY: 0,
@@ -257,16 +248,16 @@ s.sfm_id = $row->id AND r.msme_id = $msme_id");
                                       xaxis: {
                                         max: 100,
                                         categories: [<?php
-                                        $query2 = $conn->query("SELECT
-s.sfsm_code,
-(r.`value` / 5) AS total_value,
-((r.`value` / 5)) * 100 AS perc_value
-FROM responses r
-LEFT JOIN sfsms s ON r.sfsm_id = s.id WHERE s.sfm_id = $row->id AND r.msme_id = $msme_id");
-                                        while ($row2 = $query2->fetch_object()) {
-                                          echo "'" . $row2->sfsm_code . "',";
-                                        }
-                                        ?>],
+                                                      $query2 = $conn->query("SELECT
+                                                      s.sfsm_code,
+                                                      (r.`value` / 5) * s.weight AS total_value,
+                                                      ((r.`value` / 5)) * 100 AS perc_value
+                                                      FROM responses r
+                                                      LEFT JOIN sfsms s ON r.sfsm_id = s.id WHERE s.sfm_id = $row->id AND r.msme_id = $msme_id");
+                                                      while ($row2 = $query2->fetch_object()) {
+                                                        echo "'" . $row2->sfsm_code . "',";
+                                                      }
+                                                      ?>],
                                       }
                                     };
 
@@ -276,7 +267,7 @@ LEFT JOIN sfsms s ON r.sfsm_id = s.id WHERE s.sfm_id = $row->id AND r.msme_id = 
                                     chart.render();
                                   </script>
                                 </div>
-                                <?php
+                              <?php
                               }
                               ?>
                             </div>
@@ -291,7 +282,7 @@ LEFT JOIN sfsms s ON r.sfsm_id = s.id WHERE s.sfm_id = $row->id AND r.msme_id = 
                   $query = "SELECT distinct(`swot_category`) from `swots`";
                   $result = $conn->execute_query($query);
                   while ($row = $result->fetch_object()) {
-                    ?>
+                  ?>
                     <div class="col-md-6">
                       <div class="card border border-1">
                         <div class="card-header p-2" style="background-color:#eaeff8;">
@@ -306,38 +297,75 @@ LEFT JOIN sfsms s ON r.sfsm_id = s.id WHERE s.sfm_id = $row->id AND r.msme_id = 
                             $query2 = "SELECT * FROM responses r LEFT JOIN swots ON r.swot_id = swots.id WHERE r.swot_id IS NOT NULL AND r.msme_id = ? AND swots.swot_category = ?";
                             $result2 = $conn->execute_query($query2, [$msme_id, $row->swot_category]);
                             while ($row2 = $result2->fetch_object()) {
-                              ?>
+                            ?>
                               <li class="mt-3">
                                 <?= $row2->swot ?>
                               </li>
-                              <?php
+                            <?php
                             }
                             ?>
                           </ul>
                         </div>
                       </div>
                     </div>
-                    <?php
+                  <?php
                   }
                   ?>
-                </div>
+                  <div class="col-md-12">
+                    <div class="card border border-1">
+                      <div class="card-header p-2" style="background-color:#eaeff8;">
+                        <strong class="h4">
+                          Competitive Features
+                      </div>
+                      <div class="card-body pt-3 small">
+                        <?php
+                        $query = $conn->query("SELECT * FROM cfms");
+                        while ($row = $query->fetch_object()) {
+                        ?>
+                          <p>
+                            <?= $row->cfm ?>
+                          </p>
+                          <table class="table table-bordered small">
+                            <tbody>
+                              <?php
+                              $query2 = $conn->query("SELECT * FROM cfsms c WHERE c.cfm_id = $row->id");
+                              while ($row2 = $query2->fetch_object()) {
+                                $query3 = $conn->query("SELECT * FROM responses WHERE cfm_id=$row->id and cfsm_id=$row2->id and msme_id=$msme_id");
+                                $get_query3 = $query3->fetch_object();
+                              ?>
+                                <tr>
+                                  <td class=" small" scope="row">
+                                    <?= $row2->cfsm ?>
+                                  </td>
+                                  <td id="colorIndicator<?= $row2->id ?>" class="<?= isset($get_query3->value) ? ($get_query3->value == 1 ? 'bg-success' : 'bg-danger') : 'bg-secondary-light' ?>" width="5%"></td>
+                                </tr>
+                              <?php
+                              }
+                              ?>
+                            </tbody>
+                          </table>
+                        <?php
+                        }
+                        ?>
+                      </div>
+                    </div>
+                  </div>
 
-                <div class="mb-3 text-center">
-                  <button class="btn btn-primary" onclick="window.print()">Print copy</button>
+                  <div class="mb-3 text-center">
+                    <button class="btn btn-primary" onclick="window.print()">Print copy</button>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div class="credits text-center">
-              Designed by <a href="#Phage">Phage</a>
-            </div>
+              <div class="credits text-center">
+                Designed by <a href="#Phage">Phage</a>
+              </div>
 
+            </div>
           </div>
         </div>
-      </div>
 
     </section>
-
   </div>
   <div class="d-print-block d-none" style="font-size: 1rem">
     <div class="row">
@@ -384,16 +412,16 @@ LEFT JOIN sfsms s ON r.sfsm_id = s.id WHERE s.sfm_id = $row->id AND r.msme_id = 
               data: [
                 <?php
                 $query = "
-SELECT 
-sfms.*,
-SUM(a.`value`) / SUM(5) * sfms.`weight` AS total_value,
-(SUM(a.`value`) / SUM(5) * sfms.`weight` / sfms.weight) * 100 AS chart_data
-FROM 
-sfms
-LEFT JOIN 
-responses a ON a.`sfm_id` = sfms.id AND a.`msme_id` = $msme_id AND a.`assessment_type_id` = 1
-GROUP BY 
-sfms.id";
+                SELECT 
+                sfms.*,
+                SUM(a.`value`) / SUM(5) * sfms.`weight` AS total_value,
+                (SUM(a.`value`) / SUM(5) * sfms.`weight` / sfms.weight) * 100 AS chart_data
+                FROM 
+                sfms
+                LEFT JOIN 
+                responses a ON a.`sfm_id` = sfms.id AND a.`msme_id` = $msme_id AND a.`assessment_type_id` = 1
+                GROUP BY 
+                sfms.id";
                 $result = $conn->execute_query($query);
                 while ($row = $result->fetch_object()) {
                   echo number_format($row->chart_data, 2) . ",";
@@ -417,7 +445,7 @@ sfms.id";
             },
             dataLabels: {
               enabled: true,
-              formatter: function (val) {
+              formatter: function(val) {
                 return val + "%";
               },
             },
@@ -425,24 +453,24 @@ sfms.id";
               categories: [
                 <?php
                 $query = "
-SELECT sfms.*, (
-SELECT SUM(a.`value`) / SUM(5) * sfms.`weight`
-FROM responses a
-WHERE
-a.`msme_id` = $msme_id
-AND a.`assessment_type_id` = 1
-AND a.`sfm_id` = sfms.id
-) AS total_value, (
-(
-SELECT SUM(a.`value`) / SUM(5) * sfms.`weight`
-FROM responses a
-WHERE
-a.`msme_id` = $msme_id
-AND a.`assessment_type_id` = 1
-AND a.`sfm_id` = sfms.id
-) / sfms.weight
-) * 100 as chart_data
-FROM sfms";
+                SELECT sfms.*, (
+                SELECT SUM(a.`value`) / SUM(5) * sfms.`weight`
+                FROM responses a
+                WHERE
+                a.`msme_id` = $msme_id
+                AND a.`assessment_type_id` = 1
+                AND a.`sfm_id` = sfms.id
+                ) AS total_value, (
+                (
+                SELECT SUM(a.`value`) / SUM(5) * sfms.`weight`
+                FROM responses a
+                WHERE
+                a.`msme_id` = $msme_id
+                AND a.`assessment_type_id` = 1
+                AND a.`sfm_id` = sfms.id
+                ) / sfms.weight
+                ) * 100 as chart_data
+                FROM sfms";
                 $result = $conn->execute_query($query);
                 while ($row = $result->fetch_object()) {
                   echo "'" . $row->sfm_code . "',";
@@ -456,33 +484,34 @@ FROM sfms";
           chart.render();
         </script>
       </div>
+      <hr>
+      <hr>
       <div class="col-12">
-        <hr>
         <p class="h5"><strong>Sub-Main Success Factors</strong></p>
         <?php
         $query = $conn->query("SELECT * FROM sfms");
         while ($row = $query->fetch_object()) {
-          ?>
+        ?>
           <?php
           $query4 = $conn->query("
-SELECT sfms.*, (
-SELECT SUM(a.`value`) / SUM(5) * sfms.`weight`
-FROM responses a
-WHERE
-a.`msme_id` = $msme_id
-AND a.`assessment_type_id` = 1
-AND a.`sfm_id` = sfms.id
-) AS total_value, (
-(
-SELECT SUM(a.`value`) / SUM(5) * sfms.`weight`
-FROM responses a
-WHERE
-a.`msme_id` = $msme_id
-AND a.`assessment_type_id` = 1
-AND a.`sfm_id` = sfms.id
-) / sfms.weight
-) * 100 as chart_data
-FROM sfms WHERE sfms.id = $row->id");
+          SELECT sfms.*, (
+          SELECT SUM(a.`value`) / SUM(5) * sfms.`weight`
+          FROM responses a
+          WHERE
+          a.`msme_id` = $msme_id
+          AND a.`assessment_type_id` = 1
+          AND a.`sfm_id` = sfms.id
+          ) AS total_value, (
+          (
+          SELECT SUM(a.`value`) / SUM(5) * sfms.`weight`
+          FROM responses a
+          WHERE
+          a.`msme_id` = $msme_id
+          AND a.`assessment_type_id` = 1
+          AND a.`sfm_id` = sfms.id
+          ) / sfms.weight
+          ) * 100 as chart_data
+          FROM sfms WHERE sfms.id = $row->id");
           $get_avg = $query4->fetch_object();
           ?>
           <strong>
@@ -502,15 +531,15 @@ FROM sfms WHERE sfms.id = $row->id");
             <tbody>
               <?php
               $query2 = $conn->query("
-SELECT
-s.*,
-(r.`value` / 5) AS total_value,
-((r.`value` / 5)) * 100 AS perc_value
-FROM responses r
-LEFT JOIN sfsms s ON r.sfsm_id = s.id 
-WHERE s.sfm_id = $row->id AND r.msme_id = $msme_id");
+              SELECT
+              s.*,
+              (r.`value` / 5) * s.weight AS total_value,
+              ((r.`value` / 5)) * 100 AS perc_value
+              FROM responses r
+              LEFT JOIN sfsms s ON r.sfsm_id = s.id 
+              WHERE s.sfm_id = $row->id AND r.msme_id = $msme_id");
               while ($row2 = $query2->fetch_object()) {
-                ?>
+              ?>
                 <tr>
                   <th class="m-0 pb-1 small">
                     <?= $row2->sfsm_code ?>
@@ -522,45 +551,94 @@ WHERE s.sfm_id = $row->id AND r.msme_id = $msme_id");
                     <?= number_format($row2->perc_value, 2) ?>%
                   </td>
                 </tr>
-                <?php
+              <?php
               }
               ?>
             </tbody>
           </table>
-          <?php
+        <?php
         }
         ?>
+      </div>
+      <hr>
+      <hr>
+      <div class="col-12">
+        <p class="h5"><strong>Classification of Success Levels</strong></p>
+        ...
+      </div>
+      <hr>
+      <hr>
+      <div class="col-12 row">
+        <p class="h5"><strong>SWOT Analysis</strong></p>
+        <?php
+        $query = "SELECT distinct(`swot_category`) from `swots`";
+        $result = $conn->execute_query($query);
+        while ($row = $result->fetch_object()) {
+        ?>
+          <div class="col-6">
+            <strong class="text-muted">
+              <?= $row->swot_category[0] ?> |
+              <?= $row->swot_category ?>
+            </strong>
+            <ul>
+              <?php
+              $query2 = "SELECT * FROM responses r LEFT JOIN swots ON r.swot_id = swots.id WHERE r.swot_id IS NOT NULL AND r.msme_id = ? AND swots.swot_category = ?";
+              $result2 = $conn->execute_query($query2, [$msme_id, $row->swot_category]);
+              while ($row2 = $result2->fetch_object()) {
+              ?>
+                <li class="mt-3">
+                  <?= $row2->swot ?>
+                </li>
+              <?php
+              }
+              ?>
+            </ul>
+          </div>
+        <?php
+        }
+        ?>
+      </div>
+      <hr>
+      <hr>
+      <div class="col-12">
+        <p class="h5"><strong>Competitive Features</strong></p>
+        <?php
+        $query = $conn->query("SELECT * FROM cfms");
+        while ($row = $query->fetch_object()) {
+        ?>
+          <p>
+            <?= $row->cfm ?>
+          </p>
+          <table class="table table-bordered small">
+            <tbody>
+              <?php
+              $query2 = $conn->query("SELECT * FROM cfsms c WHERE c.cfm_id = $row->id");
+              while ($row2 = $query2->fetch_object()) {
+                $query3 = $conn->query("SELECT * FROM responses WHERE cfm_id=$row->id and cfsm_id=$row2->id and msme_id=$msme_id");
+                $get_query3 = $query3->fetch_object();
+              ?>
+                <tr>
+                  <td class=" small" scope="row">
+                    <?= $row2->cfsm ?>
+                  </td>
+                  <td id="colorIndicator<?= $row2->id ?>" style="color: <?= isset($get_query3->value) ? ($get_query3->value == 1 ? '#198754' : '#dc3545') : '#e2e3e5' ?>" width="5%"><?= isset($get_query3->value) ? ($get_query3->value == 1 ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/></svg>' : '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/></svg>') : '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4m.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2"/></svg>' ?></td>
+                </tr>
+              <?php
+              }
+              ?>
+            </tbody>
+          </table>
+        <?php
+        }
+        ?>
+      </div>
+      <hr>
+      <hr>
+      <div class="col-12">
+        <p class="h5"><strong>Summary of Findings</strong></p>
+        ...
         <hr>
       </div>
-      <p class="h5"><strong>SWOT Analysis</strong></p>
-      <?php
-      $query = "SELECT distinct(`swot_category`) from `swots`";
-      $result = $conn->execute_query($query);
-      while ($row = $result->fetch_object()) {
-        ?>
-        <div class="col-6">
-          <strong class="text-muted">
-            <?= $row->swot_category[0] ?> |
-            <?= $row->swot_category ?>
-          </strong>
-          <ul>
-            <?php
-            $query2 = "SELECT * FROM responses r LEFT JOIN swots ON r.swot_id = swots.id WHERE r.swot_id IS NOT NULL AND r.msme_id = ? AND swots.swot_category = ?";
-            $result2 = $conn->execute_query($query2, [$msme_id, $row->swot_category]);
-            while ($row2 = $result2->fetch_object()) {
-              ?>
-              <li class="mt-3">
-                <?= $row2->swot ?>
-              </li>
-              <?php
-            }
-            ?>
-          </ul>
-        </div>
-        <?php
-      }
-      ?>
-      <hr>
     </div>
   </div>
 </main><!-- End #main -->
