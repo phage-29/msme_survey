@@ -56,22 +56,6 @@
   border-left: 75px solid #ddd;
   /* 75% of original size */
 }
-
-@media (max-width: 768px) {
-  /* Adjust styles for screens up to 768px wide (tablets) */
-  .square {
-    width: 75%; /* 75% of parent container's width */
-    height: auto; /* Auto height */
-    padding-top: 20px; /* Adjust padding accordingly */
-    font-size: 12px; /* Adjust font size for smaller screens */
-  }
-
-  .rectangle-elements {
-    width: 75%; /* 75% of parent container's width */
-    font-size: 10px; /* Adjust font size for smaller screens */
-  }
-}
-
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
