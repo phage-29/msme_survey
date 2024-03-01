@@ -71,8 +71,25 @@ require_once("assets/components/templates/header.php");
                     <script>
                       <?php
                       // Execute SQL query to fetch data
-                      $query = "SELECT sfms.*, (SELECT SUM(a.`value`) / SUM(5) * sfms.`weight` FROM responses a WHERE a.`msme_id` = $msme_id AND a.`assessment_type_id` = 1 AND a.`sfm_id` = sfms.id) AS total_value, ((SELECT SUM(a.`value`) / SUM(5) * sfms.`weight` FROM responses a WHERE a.`msme_id` = $msme_id AND a.`assessment_type_id` = 1 AND a.`sfm_id` = sfms.id) / sfms.weight) * 100 AS chart_data FROM sfms";
-                      $result = $conn->execute_query($query);
+                      $query = "
+                      SELECT
+                          sfms.*,
+                          (
+                              (
+                                  SELECT
+                                      SUM((responses.value / 5) * sfsms.weight)
+                                  FROM
+                                      responses
+                                      left join sfsms on responses.sfsm_id = sfsms.id
+                                  WHERE
+                                      msme_id = ?
+                                      and responses.sfm_id = sfms.id
+                              ) / sfms.weight
+                          ) * 100 AS perc_value
+                      FROM
+                          sfms
+                      ";
+                      $result = $conn->execute_query($query, [$msme_id]);
 
                       // Initialize arrays to store chart data
                       $chartData = [];
@@ -80,7 +97,7 @@ require_once("assets/components/templates/header.php");
 
                       // Fetch data and populate arrays
                       while ($row = $result->fetch_object()) {
-                        $chartData[] = number_format($row->chart_data, 2);
+                        $chartData[] = number_format($row->perc_value, 2);
                         $categoryLabels[] = $row->sfm_code;
                       }
                       ?>
@@ -276,46 +293,158 @@ require_once("assets/components/templates/header.php");
                       </div>
                     </div>
                   </div>
-
-                  <h5 class="text-center pb-0 fs-4">SWOT Analysis</h5>
-                  <?php
-                  $query = "SELECT distinct(`swot_category`) from `swots`";
-                  $result = $conn->execute_query($query);
-                  while ($row = $result->fetch_object()) {
-                  ?>
-                    <div class="col-md-6">
-                      <div class="card border border-1">
-                        <div class="card-header p-2" style="background-color:#eaeff8;">
-                          <strong class="h4">
-                            <?= $row->swot_category[0] ?> |
-                          </strong>
-                          <?= $row->swot_category ?>
-                        </div>
-                        <div class="card-body pt-3" style="height: 300px;overflow-y: auto;">
-                          <ul>
-                            <?php
-                            $query2 = "SELECT * FROM responses r LEFT JOIN swots ON r.swot_id = swots.id WHERE r.swot_id IS NOT NULL AND r.msme_id = ? AND swots.swot_category = ?";
-                            $result2 = $conn->execute_query($query2, [$msme_id, $row->swot_category]);
-                            while ($row2 = $result2->fetch_object()) {
-                            ?>
-                              <li class="mt-3">
-                                <?= $row2->swot ?>
-                              </li>
-                            <?php
+                  <div class="col-md-12">
+                    <div class="card border border-1">
+                      <div class="card-header p-2" style="background-color:#eaeff8;">
+                        <strong class="h4">Classification of Success Levels</strong>
+                      </div>
+                      <div class="card-body pt-3 row small text-center">
+                        <?php
+                        function displayResults($query, $range)
+                        {
+                          global $conn;
+                          $result = $conn->execute_query($query, $range);
+                          if ($result->num_rows) {
+                            while ($row = $result->fetch_object()) {
+                              echo "<li>{$row->sfm_code} | " . number_format($row->perc_value, 2) . "%</li>";
                             }
-                            ?>
-                          </ul>
+                          } else {
+                            echo "<li><em>You don't have " . ucfirst($range[0] == 0 ? "Low" : ($range[0] == 75 ? "Average" : "High")) . " Success Factor</em></li>";
+                          }
+                        }
+
+                        $query = "
+                        SELECT
+                            sfms.*,
+                            (
+                                (
+                                    SELECT
+                                        SUM((responses.value / 5) * sfsms.weight)
+                                    FROM
+                                        responses
+                                        left join sfsms on responses.sfsm_id = sfsms.id
+                                    WHERE
+                                        msme_id = 1
+                                        and responses.sfm_id = sfms.id
+                                ) / sfms.weight
+                            ) * 100 AS perc_value
+                        FROM
+                            sfms
+                        HAVING 
+                            perc_value >= ? 
+                            AND perc_value <= ?
+                        ";
+                        ?>
+                        <div style="display: flex; margin-bottom: 50px;">
+                          <div class="square">
+                            <h1>Low</h1>
+                            <ul class="d-md-none">
+                              <?php
+                              displayResults($query, [0, 74]);
+                              ?>
+                            </ul>
+                          </div>
+                          <div class="rectangle d-none d-md-block d-lg-block">
+                            <div class="rectangle-elements" style="background-color: #ddd !important">
+                              <ul>
+                                <?php
+                                displayResults($query, [0, 74]);
+                                ?>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                        <div style="display: flex; margin-bottom: 50px;">
+                          <div class="square">
+                            <h1>Average</h1>
+                            <ul class="d-md-none">
+                              <?php
+                              displayResults($query, [75, 85]);
+                              ?>
+                            </ul>
+                          </div>
+                          <div class="rectangle d-none d-md-block d-lg-block">
+                            <div class="rectangle-elements" style="background-color: #ddd !important">
+                              <ul>
+                                <?php
+                                displayResults($query, [75, 85]);
+                                ?>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                        <div style="display: flex; margin-bottom: 50px;">
+                          <div class="square">
+                            <h1>High</h1>
+                            <ul class="d-md-none">
+                              <?php
+                              displayResults($query, [86, 100]);
+                              ?>
+                            </ul>
+                          </div>
+                          <div class="rectangle d-none d-md-block d-lg-block">
+                            <div class="rectangle-elements" style="background-color: #ddd !important">
+                              <ul>
+                                <?php
+                                displayResults($query, [86, 100]);
+                                ?>
+                              </ul>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  <?php
-                  }
-                  ?>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="card border border-1">
+                      <div class="card-header p-2" style="background-color:#eaeff8;">
+                        <strong class="h4">
+                          SWOT Analysis
+                        </strong>
+                      </div>
+                      <div class="card-body pt-3 row small">
+                        <?php
+                        $query = "SELECT distinct(`swot_category`) from `swots`";
+                        $result = $conn->execute_query($query);
+                        while ($row = $result->fetch_object()) {
+                        ?>
+                          <div class="col-md-6">
+                            <div class="card border border-1">
+                              <div class="card-header p-1">
+                                <strong class="h4">
+                                  <?= $row->swot_category[0] ?> |
+                                </strong>
+                                <?= $row->swot_category ?>
+                              </div>
+                              <div class="card-body pt-3" style="height: 300px;overflow-y: auto; font-size: 0.75em;">
+                                <ul>
+                                  <?php
+                                  $query2 = "SELECT * FROM responses r LEFT JOIN swots ON r.swot_id = swots.id WHERE r.swot_id IS NOT NULL AND r.msme_id = ? AND swots.swot_category = ?";
+                                  $result2 = $conn->execute_query($query2, [$msme_id, $row->swot_category]);
+                                  while ($row2 = $result2->fetch_object()) {
+                                  ?>
+                                    <li class="mt-3">
+                                      <?= $row2->swot ?>
+                                    </li>
+                                  <?php
+                                  }
+                                  ?>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        <?php
+                        }
+                        ?>
+                      </div>
+                    </div>
+                  </div>
                   <div class="col-md-12">
                     <div class="card border border-1">
                       <div class="card-header p-2" style="background-color:#eaeff8;">
                         <strong class="h4">
                           Competitive Features
+                        </strong>
                       </div>
                       <div class="card-body pt-3 small">
                         <?php
@@ -357,14 +486,14 @@ require_once("assets/components/templates/header.php");
                 </div>
               </div>
 
-              <div class="credits text-center">
-                Designed by <a href="#Phage">Phage</a>
-              </div>
-
             </div>
           </div>
-        </div>
 
+          <div class="credits text-center small">
+            Designed by <a href="#Phage">Phage</a>
+          </div>
+        </div>
+      </div>
     </section>
   </div>
   <div class="d-print-block d-none" style="font-size: 1rem">
@@ -409,25 +538,7 @@ require_once("assets/components/templates/header.php");
           var options = {
             series: [{
               name: 'Score',
-              data: [
-                <?php
-                $query = "
-                SELECT 
-                sfms.*,
-                SUM(a.`value`) / SUM(5) * sfms.`weight` AS total_value,
-                (SUM(a.`value`) / SUM(5) * sfms.`weight` / sfms.weight) * 100 AS chart_data
-                FROM 
-                sfms
-                LEFT JOIN 
-                responses a ON a.`sfm_id` = sfms.id AND a.`msme_id` = $msme_id AND a.`assessment_type_id` = 1
-                GROUP BY 
-                sfms.id";
-                $result = $conn->execute_query($query);
-                while ($row = $result->fetch_object()) {
-                  echo number_format($row->chart_data, 2) . ",";
-                }
-                ?>
-              ]
+              data: [<?php echo implode(',', $chartData); ?>]
             }],
             chart: {
               width: 350,
@@ -450,33 +561,7 @@ require_once("assets/components/templates/header.php");
               },
             },
             xaxis: {
-              categories: [
-                <?php
-                $query = "
-                SELECT sfms.*, (
-                SELECT SUM(a.`value`) / SUM(5) * sfms.`weight`
-                FROM responses a
-                WHERE
-                a.`msme_id` = $msme_id
-                AND a.`assessment_type_id` = 1
-                AND a.`sfm_id` = sfms.id
-                ) AS total_value, (
-                (
-                SELECT SUM(a.`value`) / SUM(5) * sfms.`weight`
-                FROM responses a
-                WHERE
-                a.`msme_id` = $msme_id
-                AND a.`assessment_type_id` = 1
-                AND a.`sfm_id` = sfms.id
-                ) / sfms.weight
-                ) * 100 as chart_data
-                FROM sfms";
-                $result = $conn->execute_query($query);
-                while ($row = $result->fetch_object()) {
-                  echo "'" . $row->sfm_code . "',";
-                }
-                ?>
-              ]
+              categories: [<?php echo "'" . implode("','", $categoryLabels) . "'"; ?>]
             }
           };
 
@@ -564,83 +649,148 @@ require_once("assets/components/templates/header.php");
       <hr>
       <div class="col-12">
         <p class="h5"><strong>Classification of Success Levels</strong></p>
-        ...
-      </div>
-      <hr>
-      <hr>
-      <div class="col-12 row">
-        <p class="h5"><strong>SWOT Analysis</strong></p>
         <?php
-        $query = "SELECT distinct(`swot_category`) from `swots`";
-        $result = $conn->execute_query($query);
-        while ($row = $result->fetch_object()) {
+        $query = "
+        SELECT
+            sfms.*,
+            (
+                (
+                    SELECT
+                        SUM((responses.value / 5) * sfsms.weight)
+                    FROM
+                        responses
+                        left join sfsms on responses.sfsm_id = sfsms.id
+                    WHERE
+                        msme_id = 1
+                        and responses.sfm_id = sfms.id
+                ) / sfms.weight
+            ) * 100 AS perc_value
+        FROM
+            sfms
+        HAVING 
+            perc_value >= ? 
+            AND perc_value <= ?
+        ";
         ?>
-          <div class="col-6">
-            <strong class="text-muted">
-              <?= $row->swot_category[0] ?> |
-              <?= $row->swot_category ?>
-            </strong>
-            <ul>
-              <?php
-              $query2 = "SELECT * FROM responses r LEFT JOIN swots ON r.swot_id = swots.id WHERE r.swot_id IS NOT NULL AND r.msme_id = ? AND swots.swot_category = ?";
-              $result2 = $conn->execute_query($query2, [$msme_id, $row->swot_category]);
-              while ($row2 = $result2->fetch_object()) {
-              ?>
-                <li class="mt-3">
-                  <?= $row2->swot ?>
-                </li>
-              <?php
-              }
-              ?>
-            </ul>
+        <div style="display: flex; margin-bottom: 25px;">
+          <div class="square">
+            <h1>Low</h1>
           </div>
-        <?php
-        }
-        ?>
-      </div>
-      <hr>
-      <hr>
-      <div class="col-12">
-        <p class="h5"><strong>Competitive Features</strong></p>
-        <?php
-        $query = $conn->query("SELECT * FROM cfms");
-        while ($row = $query->fetch_object()) {
-        ?>
-          <p>
-            <?= $row->cfm ?>
-          </p>
-          <table class="table table-bordered small">
-            <tbody>
-              <?php
-              $query2 = $conn->query("SELECT * FROM cfsms c WHERE c.cfm_id = $row->id");
-              while ($row2 = $query2->fetch_object()) {
-                $query3 = $conn->query("SELECT * FROM responses WHERE cfm_id=$row->id and cfsm_id=$row2->id and msme_id=$msme_id");
-                $get_query3 = $query3->fetch_object();
-              ?>
-                <tr>
-                  <td class=" small" scope="row">
-                    <?= $row2->cfsm ?>
-                  </td>
-                  <td id="colorIndicator<?= $row2->id ?>" style="color: <?= isset($get_query3->value) ? ($get_query3->value == 1 ? '#198754' : '#dc3545') : '#e2e3e5' ?>" width="5%"><?= isset($get_query3->value) ? ($get_query3->value == 1 ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/></svg>' : '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/></svg>') : '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4m.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2"/></svg>' ?></td>
-                </tr>
-              <?php
-              }
-              ?>
-            </tbody>
-          </table>
-        <?php
-        }
-        ?>
-      </div>
-      <hr>
-      <hr>
-      <div class="col-12">
-        <p class="h5"><strong>Summary of Findings</strong></p>
-        ...
+          <div class="rectangle">
+            <div class="rectangle-elements" style="background-color: #ddd !important">
+              <ul>
+                <?php
+                displayResults($query, [0, 74]);
+                ?>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div style="display: flex; margin-bottom: 25px;">
+          <div class="square">
+            <h1>Average</h1>
+          </div>
+          <div class="rectangle">
+            <div class="rectangle-elements">
+              <ul>
+                <?php
+                displayResults($query, [75, 85]);
+                ?>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div style="display: flex; margin-bottom: 25px;">
+          <div class="square">
+            <h1>High</h1>
+          </div>
+          <div class="rectangle">
+            <div class="rectangle-elements">
+              <ul>
+                <?php
+                displayResults($query, [86, 100]);
+                ?>
+              </ul>
+            </div>
+          </div>
+        </div>
         <hr>
+        <hr>
+        <div class="col-12 row">
+          <p class="h5"><strong>SWOT Analysis</strong></p>
+          <?php
+          $query = "SELECT distinct(`swot_category`) from `swots`";
+          $result = $conn->execute_query($query);
+          while ($row = $result->fetch_object()) {
+          ?>
+            <div class="col-6">
+              <strong class="text-muted">
+                <?= $row->swot_category[0] ?> |
+                <?= $row->swot_category ?>
+              </strong>
+              <ul>
+                <?php
+                $query2 = "SELECT * FROM responses r LEFT JOIN swots ON r.swot_id = swots.id WHERE r.swot_id IS NOT NULL AND r.msme_id = ? AND swots.swot_category = ?";
+                $result2 = $conn->execute_query($query2, [$msme_id, $row->swot_category]);
+                while ($row2 = $result2->fetch_object()) {
+                ?>
+                  <li class="mt-3">
+                    <?= $row2->swot ?>
+                  </li>
+                <?php
+                }
+                ?>
+              </ul>
+            </div>
+          <?php
+          }
+          ?>
+        </div>
+        <hr>
+        <hr>
+        <div class="col-12">
+          <p class="h5"><strong>Competitive Features</strong></p>
+          <?php
+          $query = $conn->query("SELECT * FROM cfms");
+          while ($row = $query->fetch_object()) {
+          ?>
+            <p>
+              <?= $row->cfm ?>
+            </p>
+            <table class="table table-bordered small">
+              <tbody>
+                <?php
+                $query2 = $conn->query("SELECT * FROM cfsms c WHERE c.cfm_id = $row->id");
+                while ($row2 = $query2->fetch_object()) {
+                  $query3 = $conn->query("SELECT * FROM responses WHERE cfm_id=$row->id and cfsm_id=$row2->id and msme_id=$msme_id");
+                  $get_query3 = $query3->fetch_object();
+                ?>
+                  <tr>
+                    <td class=" small" scope="row">
+                      <?= $row2->cfsm ?>
+                    </td>
+                    <td id="colorIndicator<?= $row2->id ?>" style="color: <?= isset($get_query3->value) ? ($get_query3->value == 1 ? '#198754' : '#dc3545') : '#e2e3e5' ?>" width="5%"><?= isset($get_query3->value) ? ($get_query3->value == 1 ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/></svg>' : '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/></svg>') : '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4m.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2"/></svg>' ?></td>
+                  </tr>
+                <?php
+                }
+                ?>
+              </tbody>
+            </table>
+          <?php
+          }
+          ?>
+        </div>
+        <hr>
+        <hr>
+        <div class="col-12">
+          <p class="h5"><strong>Summary of Findings</strong></p>
+          ...
+          <hr>
+        </div>
       </div>
     </div>
-  </div>
 </main><!-- End #main -->
 <?php
 require_once("assets/components/templates/footer.php");
