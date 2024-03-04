@@ -42,19 +42,19 @@ require_once("assets/components/templates/sidebar.php");
                       <div class="col-lg-6 col-md-12 col-sm-12 small text-muted d-none d-lg-flex row">
                         <div class="col-1"></div>
                         <div class="col-2 small text-center">
-                          <strong>Strongly Agree</strong>
+                          <strong>Very high</strong>
                         </div>
                         <div class="col-2 small text-center">
-                          <strong>Agree</strong>
+                          <strong>High</strong>
                         </div>
                         <div class="col-2 small text-center">
-                          <strong>Average</strong>
+                          <strong>Fair</strong>
                         </div>
                         <div class="col-2 small text-center">
-                          <strong>Disagree</strong>
+                          <strong>Low</strong>
                         </div>
                         <div class="col-2 small text-center">
-                          <strong> DisAgree</strong>
+                          <strong>Very low</strong>
                         </div>
                         <div class="col-1"></div>
                       </div>

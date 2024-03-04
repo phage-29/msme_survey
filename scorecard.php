@@ -306,7 +306,7 @@ require_once("assets/components/templates/header.php");
                           $result = $conn->execute_query($query, $range);
                           if ($result->num_rows) {
                             while ($row = $result->fetch_object()) {
-                              echo "<li>{$row->sfm_code} | " . number_format($row->perc_value, 2) . "%</li>";
+                              echo "<li>" . $row->sfm . " <span class='float-end'>" . number_format($row->perc_value, 2) . "%</span></li>";
                             }
                           } else {
                             echo "<li><em>You don't have " . ucfirst($range[0] == 0 ? "Low" : ($range[0] == 75 ? "Average" : "High")) . " Success Factor</em></li>";
@@ -335,18 +335,13 @@ require_once("assets/components/templates/header.php");
                             AND perc_value <= ?
                         ";
                         ?>
-                        <div style="display: flex; margin-bottom: 50px;">
-                          <div class="square">
-                            <h1>Low</h1>
-                            <ul class="d-md-none">
-                              <?php
-                              displayResults($query, [0, 74]);
-                              ?>
-                            </ul>
-                          </div>
-                          <div class="rectangle d-none d-md-block d-lg-block">
-                            <div class="rectangle-elements" style="background-color: #ddd !important">
-                              <ul>
+                        <div class="col-lg-4">
+                          <div class="card border border-1">
+                            <div class="card-header">
+                              Low
+                            </div>
+                            <div class="card-body">
+                              <ul class="list-group list-group-flush text-start">
                                 <?php
                                 displayResults($query, [0, 74]);
                                 ?>
@@ -354,18 +349,13 @@ require_once("assets/components/templates/header.php");
                             </div>
                           </div>
                         </div>
-                        <div style="display: flex; margin-bottom: 50px;">
-                          <div class="square">
-                            <h1>Average</h1>
-                            <ul class="d-md-none">
-                              <?php
-                              displayResults($query, [75, 85]);
-                              ?>
-                            </ul>
-                          </div>
-                          <div class="rectangle d-none d-md-block d-lg-block">
-                            <div class="rectangle-elements" style="background-color: #ddd !important">
-                              <ul>
+                        <div class="col-lg-4">
+                          <div class="card border border-1">
+                            <div class="card-header">
+                              Average
+                            </div>
+                            <div class="card-body">
+                              <ul class="list-group list-group-flush text-start">
                                 <?php
                                 displayResults($query, [75, 85]);
                                 ?>
@@ -373,18 +363,13 @@ require_once("assets/components/templates/header.php");
                             </div>
                           </div>
                         </div>
-                        <div style="display: flex; margin-bottom: 50px;">
-                          <div class="square">
-                            <h1>High</h1>
-                            <ul class="d-md-none">
-                              <?php
-                              displayResults($query, [86, 100]);
-                              ?>
-                            </ul>
-                          </div>
-                          <div class="rectangle d-none d-md-block d-lg-block">
-                            <div class="rectangle-elements" style="background-color: #ddd !important">
-                              <ul>
+                        <div class="col-lg-4">
+                          <div class="card border border-1">
+                            <div class="card-header">
+                              High
+                            </div>
+                            <div class="card-body">
+                              <ul class="list-group list-group-flush text-start">
                                 <?php
                                 displayResults($query, [86, 100]);
                                 ?>
@@ -395,6 +380,7 @@ require_once("assets/components/templates/header.php");
                       </div>
                     </div>
                   </div>
+
                   <div class="col-md-12">
                     <div class="card border border-1">
                       <div class="card-header p-2" style="background-color:#eaeff8;">
@@ -407,6 +393,19 @@ require_once("assets/components/templates/header.php");
                         $query = "SELECT distinct(`swot_category`) from `swots`";
                         $result = $conn->execute_query($query);
                         while ($row = $result->fetch_object()) {
+                          $avg = $conn->query("SELECT
+                              (COUNT(r.id) / COUNT(s.id)) * 100 as `value`
+                          FROM
+                              swots s
+                              left join (
+                                  SELECT
+                                      *
+                                  from
+                                      responses r
+                                  where
+                                      r.msme_id = " . $msme_id . "
+                              ) r ON s.id = r.swot_id
+                          WHERE s.swot_category = '" . $row->swot_category . "'")->fetch_object();
                         ?>
                           <div class="col-md-6">
                             <div class="card border border-1">
@@ -414,7 +413,7 @@ require_once("assets/components/templates/header.php");
                                 <strong class="h4">
                                   <?= $row->swot_category[0] ?> |
                                 </strong>
-                                <?= $row->swot_category ?>
+                                <?= $row->swot_category ?> <strong class="h6"><?= number_format($avg->value, 2) ?>%</strong>
                               </div>
                               <div class="card-body pt-3" style="height: 300px;overflow-y: auto; font-size: 0.75em;">
                                 <ul>
@@ -672,7 +671,9 @@ require_once("assets/components/templates/header.php");
             AND perc_value <= ?
         ";
         ?>
-        <div style="display: flex; margin-bottom: 25px;">
+
+
+        <!-- <div style="display: flex; margin-bottom: 25px;">
           <div class="square">
             <h1>Low</h1>
           </div>
@@ -715,7 +716,7 @@ require_once("assets/components/templates/header.php");
               </ul>
             </div>
           </div>
-        </div>
+        </div> -->
         <hr>
         <hr>
         <div class="col-12 row">
