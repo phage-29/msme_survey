@@ -1,2 +1,2 @@
 <?php
-header('Location: validation.php');
+header('Location: assessment.php');

@@ -12,6 +12,14 @@ require_once("assets/components/templates/sidebar.php");
     <h1>
       <?= $page ?>
     </h1>
+    <p>
+      SWOT Analysis is a tool used to identify and analyze internal strength and weaknesses and external opportunities
+      and threats that help develop strategic goals.
+      <br>
+      <em>
+        <strong>Direction:</strong> Kindly click the (+) sign if you think the item is applicable to your business.
+      </em>
+    </p>
   </div><!-- End Page Title -->
 
   <section class="section">
@@ -22,49 +30,60 @@ require_once("assets/components/templates/sidebar.php");
           <?php
           $query = $conn->query("SELECT DISTINCT(swot_category) FROM swots");
           while ($row = $query->fetch_object()) {
-          ?>
+            ?>
             <div class="accordion mb-3" id="accordion<?= $row->swot_category ?>">
               <div class="accordion-item">
                 <h2 class="accordion-header">
-                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?= $row->swot_category ?>" aria-expanded="true" aria-controls="collapse<?= $row->swot_category ?>">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapse<?= $row->swot_category ?>" aria-expanded="true"
+                    aria-controls="collapse<?= $row->swot_category ?>">
                     <?= $row->swot_category ?>
                   </button>
                 </h2>
-                <div id="collapse<?= $row->swot_category ?>" class="accordion-collapse collapse show" data-bs-parent="#accordion<?= $row->swot_category ?>">
+                <div id="collapse<?= $row->swot_category ?>" class="accordion-collapse collapse show"
+                  data-bs-parent="#accordion<?= $row->swot_category ?>">
                   <div class="accordion-body">
                     <div class="row">
                       <div class="col-lg-6 col-md-12 col-sm-12 small text-muted">
                         <p><strong>Selection</strong></p>
-                        <ul id="<?= $row->swot_category ?>Selection" class="list-group border border-2" style="height: 300px; max-height: 300px; overflow-y:auto">
+                        <ul id="<?= $row->swot_category ?>Selection" class="list-group border border-2"
+                          style="height: 300px; max-height: 300px; overflow-y:auto">
                           <?php
                           $query2 = $conn->query("SELECT * FROM swots WHERE swot_category = '$row->swot_category' AND id NOT IN (SELECT swot_id FROM responses WHERE msme_id = $msme_id AND swot_id IS NOT NULL)");
                           while ($row2 = $query2->fetch_object()) {
-                          ?>
+                            ?>
                             <li class="list-group-item">
-                              <p class="form-check-label" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="<?= $row2->swot_desc ?>">
+                              <p class="form-check-label" data-bs-toggle="tooltip" data-bs-placement="top"
+                                data-bs-custom-class="custom-tooltip" data-bs-title="<?= $row2->swot_desc ?>">
                                 <?= $row2->swot ?>
-                                <button data-swot-id="<?= $row2->id ?>" type="button" class="float-end btn btn-primary btn-sm add-<?= $row->swot_category ?>"><i class="bi bi-plus-lg"></i></button>
+                                <button data-swot-id="<?= $row2->id ?>" type="button"
+                                  class="float-end btn btn-primary btn-sm add-<?= $row->swot_category ?>"><i
+                                    class="bi bi-plus-lg"></i></button>
                               </p>
                             </li>
-                          <?php
+                            <?php
                           }
                           ?>
                         </ul>
                       </div>
                       <div class="col-lg-6 col-md-12 col-sm-12 small text-muted">
                         <p><strong>Selected</strong></p>
-                        <ul id="<?= $row->swot_category ?>Selected" class="list-group border border-2" style="height: 300px; max-height: 300px; overflow-y:auto">
+                        <ul id="<?= $row->swot_category ?>Selected" class="list-group border border-2"
+                          style="height: 300px; max-height: 300px; overflow-y:auto">
                           <?php
                           $query2 = $conn->query("SELECT * FROM responses r LEFT JOIN swots s ON r.swot_id = s.id WHERE r.swot_id IS NOT NULL AND r.msme_id = $msme_id AND s.swot_category = '$row->swot_category'");
                           while ($row2 = $query2->fetch_object()) {
-                          ?>
+                            ?>
                             <li class="list-group-item">
-                              <p class="form-check-label" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="<?= $row2->swot_desc ?>">
+                              <p class="form-check-label" data-bs-toggle="tooltip" data-bs-placement="top"
+                                data-bs-custom-class="custom-tooltip" data-bs-title="<?= $row2->swot_desc ?>">
                                 <?= $row2->swot ?>
-                                <button data-swot-id="<?= $row2->swot_id ?>" type="button" class="float-end btn btn-danger btn-sm remove-<?= $row->swot_category ?>"><i class="bi bi-x-lg"></i></button>
+                                <button data-swot-id="<?= $row2->swot_id ?>" type="button"
+                                  class="float-end btn btn-danger btn-sm remove-<?= $row->swot_category ?>"><i
+                                    class="bi bi-x-lg"></i></button>
                               </p>
                             </li>
-                          <?php
+                            <?php
                           }
                           ?>
                         </ul>
@@ -73,9 +92,9 @@ require_once("assets/components/templates/sidebar.php");
 
                     <!-- Bootstrap Bundle with Popper -->
                     <script>
-                      $(document).ready(function() {
+                      $(document).ready(function () {
                         // Add button click event
-                        $(document).on('click', '.add-<?= htmlspecialchars($row->swot_category) ?>', function() {
+                        $(document).on('click', '.add-<?= htmlspecialchars($row->swot_category) ?>', function () {
                           var listItem = $(this).closest('.list-group-item');
                           listItem.detach();
                           $(this).addClass('remove-<?= htmlspecialchars($row->swot_category) ?>').removeClass('add-<?= htmlspecialchars($row->swot_category) ?>');
@@ -93,14 +112,14 @@ require_once("assets/components/templates/sidebar.php");
                               saa: '',
                             },
                             dataType: "json",
-                            success: function(response) {
+                            success: function (response) {
                               console.log("message");
                             },
                           });
                         });
 
                         // Remove button click event
-                        $(document).on('click', '.remove-<?= htmlspecialchars($row->swot_category) ?>', function() {
+                        $(document).on('click', '.remove-<?= htmlspecialchars($row->swot_category) ?>', function () {
                           var listItem = $(this).closest('.list-group-item');
                           listItem.detach();
                           $(this).addClass('add-<?= htmlspecialchars($row->swot_category) ?>').removeClass('remove-<?= htmlspecialchars($row->swot_category) ?>');
@@ -118,7 +137,7 @@ require_once("assets/components/templates/sidebar.php");
                               saa: '',
                             },
                             dataType: "json",
-                            success: function(response) {
+                            success: function (response) {
                               console.log("message");
                             },
                           });
@@ -131,7 +150,7 @@ require_once("assets/components/templates/sidebar.php");
 
               </div>
             </div>
-          <?php
+            <?php
           }
           ?>
           <div class="mb-3 text-end">

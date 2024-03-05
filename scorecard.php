@@ -673,7 +673,7 @@ require_once("assets/components/templates/header.php");
         ?>
 
 
-        <!-- <div style="display: flex; margin-bottom: 25px;">
+        <div style="display: flex; margin-bottom: 25px;">
           <div class="square">
             <h1>Low</h1>
           </div>
@@ -716,7 +716,7 @@ require_once("assets/components/templates/header.php");
               </ul>
             </div>
           </div>
-        </div> -->
+        </div>
         <hr>
         <hr>
         <div class="col-12 row">

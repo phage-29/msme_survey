@@ -2,19 +2,35 @@
     <!-- Modal -->
     <div class="modal fade" id="privacyModal" tabindex="-1" data-bs-backdrop="static"
         aria-labelledby="privacyModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="privacyModalLabel">Privacy notice</h1>
+                    <h1 class="modal-title fs-5" id="privacyModalLabel">Privacy Notice</h1>
                 </div>
                 <div class="modal-body">
-                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minus culpa totam eum nam, quas id amet
-                        explicabo officia voluptatem minima maxime necessitatibus consectetur vitae ut facilis
-                        temporibus
-                        odio incidunt debitis.</p>
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aspernatur, aperiam quaerat nostrum in
-                        tempore quas voluptas perspiciatis perferendis deleniti expedita eos necessitatibus deserunt
-                        laudantium, tenetur qui hic odit velit ullam!</p>
+                    <p>&emsp;We are committed to respecting your privacy and recognizes the importance of
+                        protecting the
+                        information collected about you. Personal information that you provided during the registration
+                        shall only be processed in relation to the assessment in the system.</p>
+                    <p><em><strong>Data Privacy Provision:</strong></em></p>
+                    <p>&emsp;Confidentiality: Your responses will be kept strictly confidential. Individual responses
+                        will not
+                        be shared, and all data will be anonymized before analysis.</p>
+                    <p><em><strong>Security Measure:</strong></em></p>
+                    <p>&emsp;We have devised security measures to protect your data
+                        from
+                        unauthorized access or disclosure.</p>
+                    <p><em><strong>Anonymity:</strong></em></p>
+                    <p>&emsp;Your individual responses will not be linked to your
+                        identity. Your
+                        privacy will be preserved throughout the survey process.</p>
+                    <p>&emsp;By proceeding this assessment, you agree that all personal information you submit in
+                        relation to
+                        this event shall be protected with reasonable and appropriate measures, and shall only be
+                        retained as long as necessary. Thank you for your time and contribution.</p>
+                    <p>Sincerely,</p>
+                    <p><strong>ANGELO G. PATRIMONIO</strong></p>
+                    <hr>
                     <form id="privacy-form">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="i_agree" name="i_agree"

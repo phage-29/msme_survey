@@ -12,6 +12,13 @@ require_once("assets/components/templates/sidebar.php");
     <h1>
       <?= $page ?>
     </h1>
+    <span>
+      <em>
+        <strong>Direction:</strong> Kindly assess your level of success factor as deemed applicable. (Continue to other
+        main indicator from
+        Very Low to Very High)
+      </em>
+    </span>
   </div><!-- End Page Title -->
 
   <section class="section">
@@ -28,8 +35,11 @@ require_once("assets/components/templates/sidebar.php");
                 <h2 class="accordion-header">
                   <button class="accordion-button" type="button" data-bs-toggle="collapse"
                     data-bs-target="#collapse<?= $row->sfm_code ?>" aria-expanded="true"
-                    aria-controls="collapse<?= $row->sfm_code ?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="<?= $row->sfm_desc ?>">
-                    <?= $row->sfm ?>
+                    aria-controls="collapse<?= $row->sfm_code ?>">
+                    <p data-bs-toggle="tooltip" data-bs-placement="bottom"
+                      data-bs-title="<?= $row->sfm_desc ?>">
+                      <?= $row->sfm ?>
+                    </p>
                   </button>
                 </h2>
                 <div id="collapse<?= $row->sfm_code ?>" class="accordion-collapse collapse show"
@@ -48,7 +58,7 @@ require_once("assets/components/templates/sidebar.php");
                           <strong>High</strong>
                         </div>
                         <div class="col-2 small text-center">
-                          <strong>Fair</strong>
+                          <strong>Average</strong>
                         </div>
                         <div class="col-2 small text-center">
                           <strong>Low</strong>
@@ -65,7 +75,8 @@ require_once("assets/components/templates/sidebar.php");
                       ?>
                       <div class="row mt-3">
                         <div class="col-lg-6 col-md-12 col-sm-12 small">
-                          <p data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="<?= $row2->sfsm_desc ?>">
+                          <p data-bs-toggle="tooltip" data-bs-placement="bottom"
+                            data-bs-title="<?= $row2->sfsm_desc ?>">
                             <?= $row2->sfsm ?>
                           </p>
                         </div>
@@ -112,7 +123,7 @@ require_once("assets/components/templates/sidebar.php");
           }
           ?>
           <div class="mb-3 text-end">
-            <a href="validation.php" class="btn btn-primary">Prev</a>
+            <a href="assessment.php" class="btn btn-primary">Prev</a>
             <button class="btn btn-primary">Next</button>
           </div>
         </form>
