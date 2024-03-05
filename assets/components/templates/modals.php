@@ -28,8 +28,6 @@
                         relation to
                         this event shall be protected with reasonable and appropriate measures, and shall only be
                         retained as long as necessary. Thank you for your time and contribution.</p>
-                    <p>Sincerely,</p>
-                    <p><strong>ANGELO G. PATRIMONIO</strong></p>
                     <hr>
                     <form id="privacy-form">
                         <div class="form-check">
