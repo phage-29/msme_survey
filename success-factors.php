@@ -81,31 +81,31 @@ require_once("assets/components/templates/sidebar.php");
                         <div class="col-lg-6 col-md-12 col-sm-12 row">
                           <div class="col-1"></div>
                           <div class="col-2 small ps-lg-5">
-                            <span class="d-md-none small text-nowrap" style="font-size: 0.40rem;">Very high</span><br>
+                            <span class="d-md-none small text-nowrap" style="font-size: 0.65rem;">Very high</span><br>
                             <input type="radio" name="<?= $row2->sfsm_code ?>" class="form-check-input"
                               onclick="return sfa(<?= $row->id ?>,<?= $row2->id ?>,<?= $msme_id ?>,5)" style="scale: 1.75;"
                               <?= $conn->query("SELECT * FROM responses WHERE sfm_id=$row->id and sfsm_id=$row2->id and msme_id=$msme_id and value = 5")->num_rows ? 'checked' : '' ?> required />
                           </div>
                           <div class="col-2 small ps-lg-5">
-                            <span class="d-md-none small text-nowrap" style="font-size: 0.40rem;">High</span><br>
+                            <span class="d-md-none small text-nowrap" style="font-size: 0.65rem;">High</span><br>
                             <input type="radio" name="<?= $row2->sfsm_code ?>" class="form-check-input"
                               onclick="return sfa(<?= $row->id ?>,<?= $row2->id ?>,<?= $msme_id ?>,4)" style="scale: 1.75;"
                               <?= $conn->query("SELECT * FROM responses WHERE sfm_id=$row->id and sfsm_id=$row2->id and msme_id=$msme_id and value = 4")->num_rows ? 'checked' : '' ?> />
                           </div>
                           <div class="col-2 small ps-lg-5">
-                            <span class="d-md-none small text-nowrap" style="font-size: 0.40rem;">Average</span><br>
+                            <span class="d-md-none small text-nowrap" style="font-size: 0.65rem;">Average</span><br>
                             <input type="radio" name="<?= $row2->sfsm_code ?>" class="form-check-input"
                               onclick="return sfa(<?= $row->id ?>,<?= $row2->id ?>,<?= $msme_id ?>,3)" style="scale: 1.75;"
                               <?= $conn->query("SELECT * FROM responses WHERE sfm_id=$row->id and sfsm_id=$row2->id and msme_id=$msme_id and value = 3")->num_rows ? 'checked' : '' ?> />
                           </div>
                           <div class="col-2 small ps-lg-5">
-                            <span class="d-md-none small text-nowrap" style="font-size: 0.40rem;">Low</span><br>
+                            <span class="d-md-none small text-nowrap" style="font-size: 0.65rem;">Low</span><br>
                             <input type="radio" name="<?= $row2->sfsm_code ?>" class="form-check-input"
                               onclick="return sfa(<?= $row->id ?>,<?= $row2->id ?>,<?= $msme_id ?>,2)" style="scale: 1.75;"
                               <?= $conn->query("SELECT * FROM responses WHERE sfm_id=$row->id and sfsm_id=$row2->id and msme_id=$msme_id and value = 2")->num_rows ? 'checked' : '' ?> />
                           </div>
                           <div class="col-2 small ps-lg-5">
-                            <span class="d-md-none small text-nowrap" style="font-size: 0.40rem;">Very low</span><br>
+                            <span class="d-md-none small text-nowrap" style="font-size: 0.65rem;">Very low</span><br>
                             <input type="radio" name="<?= $row2->sfsm_code ?>" class="form-check-input"
                               onclick="return sfa(<?= $row->id ?>,<?= $row2->id ?>,<?= $msme_id ?>,1)" style="scale: 1.75;"
                               <?= $conn->query("SELECT * FROM responses WHERE sfm_id=$row->id and sfsm_id=$row2->id and msme_id=$msme_id and value = 1")->num_rows ? 'checked' : '' ?> />
