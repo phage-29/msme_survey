@@ -29,13 +29,22 @@ if (isset($_POST['msme_validation'])) {
             if ($assessment_result->num_rows == 0) {
                 $insert_query = "INSERT INTO assessment_monitoring(`msme_id`, `success_factor`) VALUES(?, 1)";
                 $insert_result = $conn->execute_query($insert_query, [$msme_id]);
+            } else {
+                $get_ass = $assessment_result->fetch_object();
+                if ($get_ass == 1) {
+                    $response = [
+                        'status' => 'warning',
+                        'message' => 'The MSME has already undergone assessment!',
+                        'redirect' => 'success-factors.php?ref=' . encryptID($msme_id, secret_key)
+                    ];
+                } else {
+                    $response = [
+                        'status' => 'success',
+                        'message' => 'MSME validated!',
+                        'redirect' => 'success-factors.php?ref=' . encryptID($msme_id, secret_key)
+                    ];
+                }
             }
-
-            $response = [
-                'status' => 'success',
-                'message' => 'MSME validated!',
-                'redirect' => 'success-factors.php?ref=' . encryptID($msme_id, secret_key)
-            ];
         }
     } else {
         $response = [
