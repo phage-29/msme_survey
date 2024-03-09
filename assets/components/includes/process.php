@@ -31,11 +31,10 @@ if (isset($_POST['msme_validation'])) {
                 $insert_result = $conn->execute_query($insert_query, [$msme_id]);
             } else {
                 $get_ass = $assessment_result->fetch_object();
-                if ($get_ass == 1) {
+                if ($get_ass->scorecard == 1) {
                     $response = [
                         'status' => 'warning',
-                        'message' => 'The MSME has already undergone assessment!',
-                        'redirect' => 'success-factors.php?ref=' . encryptID($msme_id, secret_key)
+                        'message' => 'The MSME has already undergone assessment!'
                     ];
                 } else {
                     $response = [
