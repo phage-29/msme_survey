@@ -1,10 +1,10 @@
 <?php
 
 define('servername', 'localhost');
-// define('username', 'zoomrequestadmin');
-// define('password', '!r7TG4WuxCRJUgoo');
-define('username', 'root');
-define('password', 'Password@123!');
+define('username', 'zoomrequestadmin');
+define('password', '!r7TG4WuxCRJUgoo');
+// define('username', 'root');
+// define('password', 'Password@123!');
 define('dbname', 'midb');
 define('website', 'Market Intelligence');
 define('secret_key', 'marketintel');
