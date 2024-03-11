@@ -20,8 +20,7 @@ require_once("assets/components/templates/header.php");
 
                                 <div class="d-flex justify-content-center pt-4">
                                     <span class="logo d-flex align-items-center w-auto">
-                                        <img src="assets/img/immis.png" alt=""><img src="assets/img/logo.png" alt=""><img
-                                            src="assets/img/wvsu.png" alt="">
+                                        <img src="assets/img/immis.png" alt=""><img src="assets/img/logo.png" alt=""><img src="assets/img/wvsu.png" alt="">
                                     </span>
                                 </div><!-- End Logo -->
 
@@ -40,7 +39,7 @@ require_once("assets/components/templates/header.php");
                                         <label for="province_id" class="form-label">Province</label>
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
-                                            <select name="province_id" class="form-select" id="province_id" required>
+                                            <select name="province_id" class="form-select" id="province_id" onchange="document.getElementById('business_name').value=''" required>
                                                 <option selected disabled>--</option>
                                             </select>
                                         </div>
@@ -50,8 +49,7 @@ require_once("assets/components/templates/header.php");
                                         <label for="business_name" class="form-label">Business Name</label>
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="bi bi-building"></i></span>
-                                            <input type="text" name="business_name" class="form-control"
-                                                id="business_name" required>
+                                            <input type="text" name="business_name" class="form-control" id="business_name" required>
                                         </div>
                                     </div>
 
@@ -59,8 +57,7 @@ require_once("assets/components/templates/header.php");
                                         <input name="msme_validation" />
                                     </div>
                                     <div class="col-12">
-                                        <button class="btn btn-primary w-100" type="submit"><i
-                                                class="bi bi-box-arrow-in-right"></i> Take assessment</button>
+                                        <button class="btn btn-primary w-100" type="submit"><i class="bi bi-box-arrow-in-right"></i> Take assessment</button>
                                     </div>
                                     <div class="col-12">
                                         <!-- <p class="small mb-0 text-center"><a href="login.php">Login as admin</a></p> -->
