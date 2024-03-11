@@ -78,7 +78,7 @@ require_once("assets/components/templates/sidebar.php");
           ?>
           <div class="mb-3 text-end">
             <a href="swot-analysis.php?ref=<?= $_GET['ref'] ?>" class="btn btn-primary">Prev</a>
-            <button class="btn btn-primary" <?= !empty($am_row->comments_suggestions) ? 'type="button" data-bs-toggle="modal" data-bs-target="#suggestionsModal"' : ' type="submit"' ?>>Next</button>
+            <button class="btn btn-primary" <?= empty($am_row->comments_suggestions) ? 'type="button" data-bs-toggle="modal" data-bs-target="#suggestionsModal"' : ' type="submit"' ?>>Next</button>
           </div>
         </form>
       </div>
