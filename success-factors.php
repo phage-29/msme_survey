@@ -5,7 +5,6 @@ require_once("assets/components/templates/header.php");
 require_once("assets/components/templates/topbar.php");
 require_once("assets/components/templates/sidebar.php");
 ?>
-
 <main id="main" class="main">
 
   <div class="pagetitle">
@@ -29,20 +28,17 @@ require_once("assets/components/templates/sidebar.php");
           <?php
           $query = $conn->query("SELECT * FROM sfms");
           while ($row = $query->fetch_object()) {
-            ?>
+          ?>
             <div class="accordion mb-3" id="accordion<?= $row->sfm_code ?>">
               <div class="accordion-item">
                 <h2 class="accordion-header">
-                  <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapse<?= $row->sfm_code ?>" aria-expanded="true"
-                    aria-controls="collapse<?= $row->sfm_code ?>">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?= $row->sfm_code ?>" aria-expanded="true" aria-controls="collapse<?= $row->sfm_code ?>">
                     <p data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= $row->sfm_desc ?>">
                       <?= $row->sfm ?>
                     </p>
                   </button>
                 </h2>
-                <div id="collapse<?= $row->sfm_code ?>" class="accordion-collapse collapse show"
-                  data-bs-parent="#accordion<?= $row->sfm_code ?>">
+                <div id="collapse<?= $row->sfm_code ?>" class="accordion-collapse collapse show" data-bs-parent="#accordion<?= $row->sfm_code ?>">
                   <div class="accordion-body">
                     <div class="row mt-3">
                       <div class="col-lg-6 col-md-12 col-sm-12 small text-center text-muted d-none d-lg-flex">
@@ -71,7 +67,7 @@ require_once("assets/components/templates/sidebar.php");
                     <?php
                     $query2 = $conn->query("SELECT * FROM sfsms WHERE sfm_id = $row->id");
                     while ($row2 = $query2->fetch_object()) {
-                      ?>
+                    ?>
                       <div class="row mt-3">
                         <div class="col-lg-6 col-md-12 col-sm-12 small">
                           <p data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= $row2->sfsm_desc ?>">
@@ -82,39 +78,29 @@ require_once("assets/components/templates/sidebar.php");
                           <div class="col-1"></div>
                           <div class="col-2 small px-lg-3 text-center">
                             <span class="d-md-none small text-nowrap" style="font-size: 0.65rem;">Very high</span><br>
-                            <input type="radio" name="<?= $row2->sfsm_code ?>" class="form-check-input"
-                              onclick="return sfa(<?= $row->id ?>,<?= $row2->id ?>,<?= $msme_id ?>,5)" style="scale: 1.75;"
-                              <?= $conn->query("SELECT * FROM responses WHERE sfm_id=$row->id and sfsm_id=$row2->id and msme_id=$msme_id and value = 5")->num_rows ? 'checked' : '' ?> required />
+                            <input type="radio" name="<?= $row2->sfsm_code ?>" class="form-check-input" onclick="return sfa(<?= $row->id ?>,<?= $row2->id ?>,<?= $msme_id ?>,5)" style="scale: 1.75;" <?= $conn->query("SELECT * FROM responses WHERE sfm_id=$row->id and sfsm_id=$row2->id and msme_id=$msme_id and value = 5")->num_rows ? 'checked' : '' ?> required />
                           </div>
                           <div class="col-2 small px-lg-3 text-center">
                             <span class="d-md-none small text-nowrap" style="font-size: 0.65rem;">High</span><br>
-                            <input type="radio" name="<?= $row2->sfsm_code ?>" class="form-check-input"
-                              onclick="return sfa(<?= $row->id ?>,<?= $row2->id ?>,<?= $msme_id ?>,4)" style="scale: 1.75;"
-                              <?= $conn->query("SELECT * FROM responses WHERE sfm_id=$row->id and sfsm_id=$row2->id and msme_id=$msme_id and value = 4")->num_rows ? 'checked' : '' ?> />
+                            <input type="radio" name="<?= $row2->sfsm_code ?>" class="form-check-input" onclick="return sfa(<?= $row->id ?>,<?= $row2->id ?>,<?= $msme_id ?>,4)" style="scale: 1.75;" <?= $conn->query("SELECT * FROM responses WHERE sfm_id=$row->id and sfsm_id=$row2->id and msme_id=$msme_id and value = 4")->num_rows ? 'checked' : '' ?> />
                           </div>
                           <div class="col-2 small px-lg-3 text-center">
                             <span class="d-md-none small text-nowrap" style="font-size: 0.65rem;">Average</span><br>
-                            <input type="radio" name="<?= $row2->sfsm_code ?>" class="form-check-input"
-                              onclick="return sfa(<?= $row->id ?>,<?= $row2->id ?>,<?= $msme_id ?>,3)" style="scale: 1.75;"
-                              <?= $conn->query("SELECT * FROM responses WHERE sfm_id=$row->id and sfsm_id=$row2->id and msme_id=$msme_id and value = 3")->num_rows ? 'checked' : '' ?> />
+                            <input type="radio" name="<?= $row2->sfsm_code ?>" class="form-check-input" onclick="return sfa(<?= $row->id ?>,<?= $row2->id ?>,<?= $msme_id ?>,3)" style="scale: 1.75;" <?= $conn->query("SELECT * FROM responses WHERE sfm_id=$row->id and sfsm_id=$row2->id and msme_id=$msme_id and value = 3")->num_rows ? 'checked' : '' ?> />
                           </div>
                           <div class="col-2 small px-lg-3 text-center">
                             <span class="d-md-none small text-nowrap" style="font-size: 0.65rem;">Low</span><br>
-                            <input type="radio" name="<?= $row2->sfsm_code ?>" class="form-check-input"
-                              onclick="return sfa(<?= $row->id ?>,<?= $row2->id ?>,<?= $msme_id ?>,2)" style="scale: 1.75;"
-                              <?= $conn->query("SELECT * FROM responses WHERE sfm_id=$row->id and sfsm_id=$row2->id and msme_id=$msme_id and value = 2")->num_rows ? 'checked' : '' ?> />
+                            <input type="radio" name="<?= $row2->sfsm_code ?>" class="form-check-input" onclick="return sfa(<?= $row->id ?>,<?= $row2->id ?>,<?= $msme_id ?>,2)" style="scale: 1.75;" <?= $conn->query("SELECT * FROM responses WHERE sfm_id=$row->id and sfsm_id=$row2->id and msme_id=$msme_id and value = 2")->num_rows ? 'checked' : '' ?> />
                           </div>
                           <div class="col-2 small px-lg-3 text-center">
                             <span class="d-md-none small text-nowrap" style="font-size: 0.65rem;">Very low</span><br>
-                            <input type="radio" name="<?= $row2->sfsm_code ?>" class="form-check-input"
-                              onclick="return sfa(<?= $row->id ?>,<?= $row2->id ?>,<?= $msme_id ?>,1)" style="scale: 1.75;"
-                              <?= $conn->query("SELECT * FROM responses WHERE sfm_id=$row->id and sfsm_id=$row2->id and msme_id=$msme_id and value = 1")->num_rows ? 'checked' : '' ?> />
+                            <input type="radio" name="<?= $row2->sfsm_code ?>" class="form-check-input" onclick="return sfa(<?= $row->id ?>,<?= $row2->id ?>,<?= $msme_id ?>,1)" style="scale: 1.75;" <?= $conn->query("SELECT * FROM responses WHERE sfm_id=$row->id and sfsm_id=$row2->id and msme_id=$msme_id and value = 1")->num_rows ? 'checked' : '' ?> />
                           </div>
                           <div class="col-1"></div>
                         </div>
                       </div>
                       <hr>
-                      <?php
+                    <?php
                     }
                     ?>
                   </div>
@@ -122,7 +108,7 @@ require_once("assets/components/templates/sidebar.php");
               </div>
 
             </div>
-            <?php
+          <?php
           }
           ?>
           <div class="mb-3 text-end">
@@ -146,7 +132,7 @@ require_once("assets/components/templates/sidebar.php");
           sfa: '',
         },
         dataType: "json",
-        success: function (response) {
+        success: function(response) {
           console.log("message");
         },
       });

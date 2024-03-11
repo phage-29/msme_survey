@@ -164,6 +164,23 @@ $(document).ready(function () {
     });
   });
 
+  $("#comments-form").submit(function (e) {
+    e.preventDefault();
+
+    var formData = $(this).serialize();
+
+    $.ajax({
+      type: "POST",
+      url: "assets/components/includes/process.php",
+      data: formData,
+      dataType: "json",
+      success: function (response) {
+        $("#suggestionsModal").modal("hide");
+        $("#scf-form").submit();
+      },
+    });
+  });
+
   $("#sfa-form").submit(function (e) {
     e.preventDefault();
     // Swal.fire({
@@ -179,8 +196,8 @@ $(document).ready(function () {
       type: "POST",
       url: "assets/components/includes/process.php",
       data: {
-        "ref": $('#ref').val(),
-        "sfa_complete": "",
+        ref: $("#ref").val(),
+        sfa_complete: "",
       },
       dataType: "json",
       success: function (response) {
@@ -204,8 +221,8 @@ $(document).ready(function () {
       type: "POST",
       url: "assets/components/includes/process.php",
       data: {
-        "ref": $('#ref').val(),
-        "saa_complete": "",
+        ref: $("#ref").val(),
+        saa_complete: "",
       },
       dataType: "json",
       success: function (response) {
@@ -229,8 +246,8 @@ $(document).ready(function () {
       type: "POST",
       url: "assets/components/includes/process.php",
       data: {
-        "ref": $('#ref').val(),
-        "cfa_complete": "",
+        ref: $("#ref").val(),
+        cfa_complete: "",
       },
       dataType: "json",
       success: function (response) {

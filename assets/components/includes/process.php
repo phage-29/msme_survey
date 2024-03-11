@@ -15,7 +15,7 @@ $response = [
 
 if (isset($_POST['msme_validation'])) {
     $province_id = validate('province_id', $conn);
-    $business_name = validate('business_name',$conn);
+    $business_name = validate('business_name', $conn);
 
     $query = "SELECT * FROM msmes WHERE province_id = ? AND business_name = ?";
     $result = $conn->execute_query($query, [$province_id, $business_name]);
@@ -63,6 +63,27 @@ if (isset($_POST['i_agree'])) {
             $response = [
                 'status' => 'success',
                 'message' => 'I agree!'
+            ];
+        }
+    } catch (Exception $e) {
+        $response = [
+            'status' => 'success',
+            'message' => $e->getMessage()
+        ];
+    }
+}
+
+if (isset($_POST['comments_suggestions'])) {
+    try {
+        $comments_suggestions = validate('comments_suggestions', $conn);
+        $msme_id = validate('msme_id', $conn);
+        $query = "UPDATE assessment_monitoring SET comments_suggestions = ? WHERE msme_id = ?";
+        $result = $conn->execute_query($query, [$comments_suggestions, $msme_id]);
+
+        if ($result) {
+            $response = [
+                'status' => 'success',
+                'message' => 'comments suggestions!'
             ];
         }
     } catch (Exception $e) {

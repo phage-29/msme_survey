@@ -1,7 +1,6 @@
 <modals>
     <!-- Modal -->
-    <div class="modal fade" id="privacyModal" tabindex="-1" data-bs-backdrop="static"
-        aria-labelledby="privacyModalLabel" aria-hidden="true">
+    <div class="modal fade" id="privacyModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="privacyModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -31,8 +30,7 @@
                     <hr>
                     <form id="privacy-form">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="i_agree" name="i_agree"
-                                required>
+                            <input class="form-check-input" type="checkbox" value="" id="i_agree" name="i_agree" required>
                             <label class="form-check-label" for="i_agree">
                                 I agree
                             </label>
@@ -50,14 +48,40 @@
         </div>
     </div>
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             <?php
             if ($am_row->privacy != 1) {
-                ?>
+            ?>
                 $('#privacyModal').modal('show');
-                <?php
+            <?php
             }
             ?>
         });
     </script>
+
+    <div class="modal fade" id="suggestionsModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="suggestionsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="suggestionsModalLabel">Comments and Suggestions</h1>
+                </div>
+                <div class="modal-body">
+                    <form id="comments-form">
+                        <div class="mb-3">
+                            <div class="form-floating">
+                                <textarea class="form-control" placeholder="Leave a comment here" id="comments_suggestions" name="comments_suggestions" style="height: 150px" required></textarea>
+                                <label for="comments_suggestions">Comments/suggestions regarding this system.</label>
+                            </div>
+                        </div>
+                        <div hidden>
+                            <input value="<?= $msme_id ?>" name="msme_id" />
+                        </div>
+                        <div class="mb-3 text-end">
+                            <button type="submit" class="btn btn-primary">Proceed</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </modals>
