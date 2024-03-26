@@ -284,6 +284,94 @@ $(document).ready(function () {
   });
 
   /**
+   * List of industry_cluster
+   */
+  $.ajax({
+    url: "assets/components/includes/fetch.php",
+    type: "POST",
+    data: {
+      get_industry_clusters: true,
+    },
+    dataType: "json",
+    success: function (response) {
+      var len = response.length;
+      for (var i = 0; i < len; i++) {
+        var id = response[i]["id"];
+        var industry_cluster = response[i]["industry_cluster"];
+        $("#industry_cluster_id").append(
+          "<option value='" + id + "'>" + industry_cluster + "</option>"
+        );
+      }
+    },
+  });
+
+  /**
+   * List of industry_cluster
+   */
+  $.ajax({
+    url: "assets/components/includes/fetch.php",
+    type: "POST",
+    data: {
+      get_major_business_activities: true,
+    },
+    dataType: "json",
+    success: function (response) {
+      var len = response.length;
+      for (var i = 0; i < len; i++) {
+        var id = response[i]["id"];
+        var major_business_activity = response[i]["major_business_activity"];
+        $("#major_business_activity_id").append(
+          "<option value='" + id + "'>" + major_business_activity + "</option>"
+        );
+      }
+    },
+  });
+
+  /**
+   * List of industry_cluster
+   */
+  $.ajax({
+    url: "assets/components/includes/fetch.php",
+    type: "POST",
+    data: {
+      get_edt_levels: true,
+    },
+    dataType: "json",
+    success: function (response) {
+      var len = response.length;
+      for (var i = 0; i < len; i++) {
+        var id = response[i]["id"];
+        var edt_level = response[i]["edt_level"];
+        $("#edt_level_id").append(
+          "<option value='" + id + "'>" + edt_level + "</option>"
+        );
+      }
+    },
+  });
+
+  /**
+   * List of industry_cluster
+   */
+  $.ajax({
+    url: "assets/components/includes/fetch.php",
+    type: "POST",
+    data: {
+      get_asset_sizes: true,
+    },
+    dataType: "json",
+    success: function (response) {
+      var len = response.length;
+      for (var i = 0; i < len; i++) {
+        var id = response[i]["id"];
+        var asset_size = response[i]["asset_size"];
+        $("#asset_size_id").append(
+          "<option value='" + id + "'>" + asset_size + "</option>"
+        );
+      }
+    },
+  });
+
+  /**
    * List of business names
    */
   $("#province_id").on("change", function () {

@@ -8,14 +8,10 @@ session_start();
 
 $response = array();
 
-$response = [
-    'status' => 'warning',
-    'message' => 'Something went wrong!'
-];
-
 if (isset($_POST['msme_validation'])) {
     $province_id = validate('province_id', $conn);
-    $business_name = validate('business_name', $conn);
+    // $business_name = validate('business_name', $conn);
+    $business_name = $_POST['business_name'];
 
     $query = "SELECT * FROM msmes WHERE province_id = ? AND business_name = ?";
     $result = $conn->execute_query($query, [$province_id, $business_name]);

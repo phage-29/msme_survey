@@ -1,93 +1,183 @@
 <?php
-$page = "Register";
+$page = "Login";
 $protected = false;
+require_once("assets/components/includes/common_functions.php");
+require_once("assets/components/includes/conn.php");
 require_once("assets/components/templates/header.php");
 ?>
 <main>
-  <div class="container">
+    <div class="container">
 
-    <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+        <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-10 col-md-12 d-flex flex-column align-items-center justify-content-center">
 
-            <div class="d-flex justify-content-center py-4">
-              <a href="dashboard.php" class="logo d-flex align-items-center w-auto">
-                <img src="assets/img/logo.png" alt="">
-                <span class="d-none d-lg-block">NiceAdmin</span>
-              </a>
-            </div><!-- End Logo -->
 
-            <div class="card mb-3">
+                        <div class="card mb-3">
 
-              <div class="card-body">
+                            <div class="card-body">
 
-                <div class="pt-4 pb-2">
-                  <h5 class="card-title text-center pb-0 fs-4">Create an Account</h5>
-                  <p class="text-center small">Enter your personal details to create account</p>
+                                <div class="d-flex justify-content-center pt-4">
+                                    <span class="logo d-flex align-items-center w-auto">
+                                        <img src="assets/img/immis.png" alt=""><img src="assets/img/logo.png" alt=""><img src="assets/img/wvsu.png" alt="">
+                                    </span>
+                                </div><!-- End Logo -->
+
+                                <div class="pt-1 pb-2">
+                                    <h6 class="card-title text-center pb-0 fs-6">INTEGRATED MSME MANAGEMENT INFORMATION
+                                        SYSTEM
+                                        MARKET INTELLIGENCE MODULE
+                                    </h6>
+                                    <p class="text-center small pt-2">This Market Intelligence (MI) Tool is a combination of
+                                        various assessment tools that aim to raise business awareness of MSMEs. After
+                                        the assessment, a competitive advantage scorecard will be generated.</p>
+                                </div>
+
+                                <form class="row g-3 ajax-form">
+                                    <div class="col-lg-4 mb-3">
+                                        <label for="first_name" class="form-label">First Name</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="bi bi-building"></i></span>
+                                            <input type="text" name="first_name" class="form-control" id="first_name" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 mb-3">
+                                        <label for="middle_name" class="form-label">Middle Name</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="bi bi-building"></i></span>
+                                            <input type="text" name="middle_name" class="form-control" id="middle_name" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 mb-3">
+                                        <label for="last_name" class="form-label">Last Name</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="bi bi-building"></i></span>
+                                            <input type="text" name="last_name" class="form-control" id="last_name" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label for="sex" class="form-label">Sex</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
+                                            <select name="sex" class="form-select" id="sex" required>
+                                                <option selected disabled>--</option>
+                                                <option value="Male">Male</option>
+                                                <option value="Female">Female</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label for="age" class="form-label">Age</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
+                                            <select name="age" class="form-select" id="age" required>
+                                                <option selected disabled>--</option>
+                                                <option value="35 and Below">35 and Below</option>
+                                                <option value="36 to 59 years old">36 to 59 years old</option>
+                                                <option value="60 above">60 above</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 mb-3">
+                                        <label for="phone" class="form-label">Phone</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="bi bi-building"></i></span>
+                                            <input type="text" name="phone" class="form-control" id="phone" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 mb-3">
+                                        <label for="email" class="form-label">Email</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="bi bi-building"></i></span>
+                                            <input type="email" name="email" class="form-control" id="email" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 mb-3">
+                                        <label for="address" class="form-label">Address</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="bi bi-building"></i></span>
+                                            <textarea type="text" name="address" class="form-control" id="address" required></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 mb-3">
+                                        <label for="business_name" class="form-label">Business Name</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="bi bi-building"></i></span>
+                                            <input type="text" name="business_name" class="form-control" id="business_name" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 mb-3">
+                                        <label for="province_id" class="form-label">Province</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="bi bi-building"></i></span>
+                                            <select name="province_id" class="form-select" id="province_id" required>
+                                                <option selected disabled>--</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 mb-3">
+                                        <label for="industry_cluster_id" class="form-label">Industry Cluster</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="bi bi-building"></i></span>
+                                            <select name="industry_cluster_id" class="form-select" id="industry_cluster_id" required>
+                                                <option selected disabled>--</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 mb-3">
+                                        <label for="major_business_activity_id" class="form-label">Major Business Activity</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="bi bi-building"></i></span>
+                                            <select name="major_business_activity_id" class="form-select" id="major_business_activity_id" required>
+                                                <option selected disabled>--</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 mb-3">
+                                        <label for="edt_level_id" class="form-label">Stage of Business Operation</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="bi bi-building"></i></span>
+                                            <select name="edt_level_id" class="form-select" id="edt_level_id" required>
+                                                <option selected disabled>--</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 mb-3">
+                                        <label for="asset_size_id" class="form-label">Asset Size</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="bi bi-building"></i></span>
+                                            <select name="asset_size_id" class="form-select" id="asset_size_id" required>
+                                                <option selected disabled>--</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div hidden>
+                                        <input name="msme_validation" />
+                                    </div>
+                                    <div class="col-12">
+                                        <button class="btn btn-primary w-100" type="submit"><i class="bi bi-box-arrow-in-right"></i> Take assessment</button>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <!-- <p class="small mb-0 text-center"><a href="login.php">Login as admin</a></p> -->
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+
+                        <div class="credits">
+                            Designed by <a href="#phage">Phage</a>
+                        </div>
+
+                    </div>
                 </div>
-
-                <form class="row g-3 needs-validation" novalidate>
-                  <div class="col-12">
-                    <label for="yourName" class="form-label">Your Name</label>
-                    <input type="text" name="name" class="form-control" id="yourName" required>
-                    <div class="invalid-feedback">Please, enter your name!</div>
-                  </div>
-
-                  <div class="col-12">
-                    <label for="yourEmail" class="form-label">Your Email</label>
-                    <input type="email" name="email" class="form-control" id="yourEmail" required>
-                    <div class="invalid-feedback">Please enter a valid Email adddress!</div>
-                  </div>
-
-                  <div class="col-12">
-                    <label for="yourUsername" class="form-label">Username</label>
-                    <div class="input-group has-validation">
-                      <span class="input-group-text" id="inputGroupPrepend">@</span>
-                      <input type="text" name="username" class="form-control" id="yourUsername" required>
-                      <div class="invalid-feedback">Please choose a username.</div>
-                    </div>
-                  </div>
-
-                  <div class="col-12">
-                    <label for="yourPassword" class="form-label">Password</label>
-                    <input type="password" name="password" class="form-control" id="yourPassword" required>
-                    <div class="invalid-feedback">Please enter your password!</div>
-                  </div>
-
-                  <div class="col-12">
-                    <div class="form-check">
-                      <input class="form-check-input" name="terms" type="checkbox" value="" id="acceptTerms" required>
-                      <label class="form-check-label" for="acceptTerms">I agree and accept the <a href="#">terms and conditions</a></label>
-                      <div class="invalid-feedback">You must agree before submitting.</div>
-                    </div>
-                  </div>
-                  <div class="col-12">
-                    <button class="btn btn-primary w-100" type="submit">Create Account</button>
-                  </div>
-                  <div class="col-12">
-                    <p class="small mb-0">Already have an account? <a href="login.php">Log in</a></p>
-                  </div>
-                </form>
-
-              </div>
             </div>
 
-            <div class="credits">
-              <!-- All the links in the footer should remain intact. -->
-              <!-- You can delete the links only if you purchased the pro version. -->
-              <!-- Licensing information: https://bootstrapmade.com/license/ -->
-              <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-              Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-            </div>
+        </section>
 
-          </div>
-        </div>
-      </div>
-
-    </section>
-
-  </div>
+    </div>
 </main><!-- End #main -->
 <?php
 require_once("assets/components/templates/footer.php");

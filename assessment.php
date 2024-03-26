@@ -60,7 +60,7 @@ require_once("assets/components/templates/header.php");
                                         <button class="btn btn-primary w-100" type="submit"><i class="bi bi-box-arrow-in-right"></i> Take assessment</button>
                                     </div>
                                     <div class="col-12">
-                                        <!-- <p class="small mb-0 text-center"><a href="login.php">Login as admin</a></p> -->
+                                        <p class="small mb-0 text-center"><a href="register.php">Not registered</a></p>
                                     </div>
                                 </form>
 

@@ -17,6 +17,46 @@ if (isset($_POST['get_provinces'])) {
     }
 }
 
+if (isset($_POST['get_industry_clusters'])) {
+
+    $query = "SELECT * FROM industry_clusters";
+    $result = $conn->execute_query($query);
+
+    while ($row = $result->fetch_object()) {
+        $response[] = $row;
+    }
+}
+
+if (isset($_POST['get_major_business_activities'])) {
+
+    $query = "SELECT * FROM major_business_activities";
+    $result = $conn->execute_query($query);
+
+    while ($row = $result->fetch_object()) {
+        $response[] = $row;
+    }
+}
+
+if (isset($_POST['get_edt_levels'])) {
+
+    $query = "SELECT * FROM edt_levels";
+    $result = $conn->execute_query($query);
+
+    while ($row = $result->fetch_object()) {
+        $response[] = $row;
+    }
+}
+
+if (isset($_POST['get_asset_sizes'])) {
+
+    $query = "SELECT * FROM asset_sizes";
+    $result = $conn->execute_query($query);
+
+    while ($row = $result->fetch_object()) {
+        $response[] = $row;
+    }
+}
+
 if (isset($_POST['get_business_names'])) {
     $province_id = validate('province_id', $conn);
 
