@@ -49,6 +49,47 @@ if (isset($_POST['msme_validation'])) {
     }
 }
 
+if (isset($_POST['msme_registration'])) {
+    $province_id = validate('province_id', $conn);
+    // $business_name = validate('business_name', $conn);
+    $business_name = $_POST['business_name'];
+
+    $query = "SELECT * FROM msmes WHERE province_id = ? AND business_name = ?";
+    $result = $conn->execute_query($query, [$province_id, $business_name]);
+
+    if ($result->num_rows) {
+        while ($row = $result->fetch_object()) {
+            $msme_id = $row->id;
+            $query = "SELECT * FROM assessment_monitoring WHERE msme_id=?";
+            $assessment_result = $conn->execute_query($query, [$msme_id]);
+
+            if ($assessment_result->num_rows == 0) {
+                $insert_query = "INSERT INTO assessment_monitoring(`msme_id`, `success_factor`) VALUES(?, 1)";
+                $insert_result = $conn->execute_query($insert_query, [$msme_id]);
+            } else {
+                $get_ass = $assessment_result->fetch_object();
+                if ($get_ass->scorecard == 1) {
+                    $response = [
+                        'status' => 'warning',
+                        'message' => 'The MSME has already undergone assessment!'
+                    ];
+                } else {
+                    $response = [
+                        'status' => 'success',
+                        'message' => 'MSME validated!',
+                        'redirect' => 'success-factors.php?ref=' . encryptID($msme_id, secret_key)
+                    ];
+                }
+            }
+        }
+    } else {
+        $response = [
+            'status' => 'warning',
+            'message' => 'Failed to validate MSME!'
+        ];
+    }
+}
+
 if (isset($_POST['i_agree'])) {
     try {
         $msme_id = validate('msme_id', $conn);
