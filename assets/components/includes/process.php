@@ -50,14 +50,25 @@ if (isset($_POST['msme_validation'])) {
 }
 
 if (isset($_POST['msme_registration'])) {
-    $province_id = validate('province_id', $conn);
-    // $business_name = validate('business_name', $conn);
+    $first_name = validate('first_name', $conn);
+    $middle_name = validate('middle_name', $conn);
+    $last_name = validate('last_name', $conn);
+    $sex = validate('sex', $conn);
+    $age = validate('age', $conn);
+    $phone = validate('phone', $conn);
+    $email = validate('email', $conn);
+    $address = validate('address', $conn);
     $business_name = $_POST['business_name'];
+    $province_id = validate('province_id', $conn);
+    $industry_cluster_id = validate('industry_cluster_id', $conn);
+    $major_business_activity_id = validate('major_business_activity_id', $conn);
+    $edt_level_id = validate('edt_level_id', $conn);
+    $asset_size_id = validate('asset_size_id', $conn);
 
     $query = "SELECT * FROM msmes WHERE province_id = ? AND business_name = ?";
     $result = $conn->execute_query($query, [$province_id, $business_name]);
 
-    if ($result->num_rows) {
+    if ($result->num_rows == 0) {
         while ($row = $result->fetch_object()) {
             $msme_id = $row->id;
             $query = "SELECT * FROM assessment_monitoring WHERE msme_id=?";
