@@ -50,56 +50,86 @@ if (isset($_POST['msme_validation'])) {
 }
 
 if (isset($_POST['msme_registration'])) {
-    $first_name = validate('first_name', $conn);
-    $middle_name = validate('middle_name', $conn);
-    $last_name = validate('last_name', $conn);
-    $sex = validate('sex', $conn);
-    $age = validate('age', $conn);
-    $phone = validate('phone', $conn);
-    $email = validate('email', $conn);
-    $address = validate('address', $conn);
-    $business_name = $_POST['business_name'];
-    $province_id = validate('province_id', $conn);
-    $industry_cluster_id = validate('industry_cluster_id', $conn);
-    $major_business_activity_id = validate('major_business_activity_id', $conn);
-    $edt_level_id = validate('edt_level_id', $conn);
-    $asset_size_id = validate('asset_size_id', $conn);
+    try {
+        // Validate inputs
+        $first_name = validate('first_name', $conn);
+        $middle_name = validate('middle_name', $conn);
+        $last_name = validate('last_name', $conn);
+        $sex = validate('sex', $conn);
+        $age = validate('age', $conn);
+        $phone = validate('phone', $conn);
+        $email = validate('email', $conn);
+        $business_name = $_POST['business_name'];
+        $province_id = validate('province_id', $conn);
+        $industry_cluster_id = validate('industry_cluster_id', $conn);
+        $major_business_activity_id = validate('major_business_activity_id', $conn);
+        $edt_level_id = validate('edt_level_id', $conn);
+        $asset_size_id = validate('asset_size_id', $conn);
 
-    $query = "SELECT * FROM msmes WHERE province_id = ? AND business_name = ?";
-    $result = $conn->execute_query($query, [$province_id, $business_name]);
+        // Insert into database
+        $query = "INSERT INTO msmes(`first_name`,`middle_name`,`last_name`,`sex`,`age`,`phone`,`email`,`business_name`,`province_id`,`industry_cluster_id`,`major_business_activity_id`,`edt_level_id`,`asset_size_id`) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        $result = $conn->execute_query($query, [$first_name, $middle_name, $last_name, $sex, $age, $phone, $email, $business_name, $province_id, $industry_cluster_id, $major_business_activity_id, $edt_level_id, $asset_size_id]);
 
-    if ($result->num_rows == 0) {
-        while ($row = $result->fetch_object()) {
-            $msme_id = $row->id;
-            $query = "SELECT * FROM assessment_monitoring WHERE msme_id=?";
-            $assessment_result = $conn->execute_query($query, [$msme_id]);
+        if ($result) {
+            $id = $conn->insert_id;
 
-            if ($assessment_result->num_rows == 0) {
-                $insert_query = "INSERT INTO assessment_monitoring(`msme_id`, `success_factor`) VALUES(?, 1)";
-                $insert_result = $conn->execute_query($insert_query, [$msme_id]);
-            } else {
-                $get_ass = $assessment_result->fetch_object();
-                if ($get_ass->scorecard == 1) {
-                    $response = [
-                        'status' => 'warning',
-                        'message' => 'The MSME has already undergone assessment!'
-                    ];
+            // Check if inserted successfully
+            $query = "SELECT * FROM msmes WHERE `id` = ?";
+            $result = $conn->execute_query($query, [$id]);
+
+            if ($result->num_rows > 0) {
+                // Fetch MSME details
+                $row = $result->fetch_object();
+                $msme_id = $row->id;
+
+                // Check assessment monitoring
+                $query = "SELECT * FROM assessment_monitoring WHERE msme_id=?";
+                $assessment_result = $conn->execute_query($query, [$msme_id]);
+
+                if ($assessment_result->num_rows == 0) {
+                    // Insert into assessment monitoring
+                    $insert_query = "INSERT INTO assessment_monitoring(`msme_id`, `success_factor`) VALUES(?, 1)";
+                    $insert_result = $conn->execute_query($insert_query, [$msme_id]);
                 } else {
-                    $response = [
-                        'status' => 'success',
-                        'message' => 'MSME validated!',
-                        'redirect' => 'success-factors.php?ref=' . encryptID($msme_id, secret_key)
-                    ];
+                    // MSME has undergone assessment
+                    $get_ass = $assessment_result->fetch_object();
+                    if ($get_ass->scorecard == 1) {
+                        $response = [
+                            'status' => 'warning',
+                            'message' => 'The MSME has already undergone assessment!'
+                        ];
+                    } else {
+                        // Success response
+                        $response = [
+                            'status' => 'success',
+                            'message' => 'MSME registered!',
+                            'redirect' => 'success-factors.php?ref=' . encryptID($msme_id, secret_key)
+                        ];
+                    }
                 }
+            } else {
+                // Failed to fetch MSME details
+                $response = [
+                    'status' => 'warning',
+                    'message' => 'Failed to fetch MSME details!'
+                ];
             }
+        } else {
+            // Insertion failed
+            $response = [
+                'status' => 'warning',
+                'message' => 'Failed to register MSME!'
+            ];
         }
-    } else {
+    } catch (Exception $e) {
+        // Insertion failed
         $response = [
-            'status' => 'warning',
-            'message' => 'Failed to validate MSME!'
+            'status' => 'error',
+            'message' => 'Error:'.$e->getMessage()
         ];
     }
 }
+
 
 if (isset($_POST['i_agree'])) {
     try {

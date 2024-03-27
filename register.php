@@ -93,13 +93,6 @@ require_once("assets/components/templates/header.php");
                                             <input type="email" name="email" class="form-control" id="email" required>
                                         </div>
                                     </div>
-                                    <div class="col-lg-12 mb-3">
-                                        <label for="address" class="form-label">Address</label>
-                                        <div class="input-group">
-                                            <span class="input-group-text"><i class="bi bi-building"></i></span>
-                                            <textarea type="text" name="address" class="form-control" id="address" required></textarea>
-                                        </div>
-                                    </div>
                                     <div class="col-lg-6 mb-3">
                                         <label for="business_name" class="form-label">Business Name</label>
                                         <div class="input-group">
@@ -154,7 +147,7 @@ require_once("assets/components/templates/header.php");
                                     </div>
 
                                     <div hidden>
-                                        <input name="msme_validation" />
+                                        <input name="msme_registration" />
                                     </div>
                                     <div class="col-12">
                                         <button class="btn btn-primary w-100" type="submit"><i class="bi bi-box-arrow-in-right"></i> Take assessment</button>
