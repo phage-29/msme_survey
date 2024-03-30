@@ -51,11 +51,11 @@ require_once("assets/components/templates/sidebar.php");
                               <?= $row2->cfsm ?>
                               <div class="float-end">
                                 <div class="form-check form-check-inline mb-3">
-                                  <input class="form-check-input mt-3" onclick="return cfa(<?= $row->id ?>,<?= $row2->id ?>,<?= $msme_id ?>,1)" type="radio" style="scale: 1.78;" name="options<?= $row2->id ?>" id="yesradio<?= $row2->id ?>" <?= isset($get_query3->value) ? ($get_query3->value == 1 ? 'checked' : '') : '' ?> required />
+                                  <input class=" mt-3" onclick="return cfa(<?= $row->id ?>,<?= $row2->id ?>,<?= $msme_id ?>,1)" type="radio" style="scale: 1.78;" name="options<?= $row2->id ?>" id="yesradio<?= $row2->id ?>" <?= isset($get_query3->value) ? ($get_query3->value == 1 ? 'checked' : '') : '' ?> required />
                                   <label class="form-check-label mt-3" for="yesradio<?= $row2->id ?>">Yes</label>
                                 </div>
                                 <div class="form-check form-check-inline mb-3">
-                                  <input class="form-check-input mt-3" onclick="return cfa(<?= $row->id ?>,<?= $row2->id ?>,<?= $msme_id ?>,2)" type="radio" style="scale: 1.78;" name="options<?= $row2->id ?>" id="noradio<?= $row2->id ?>" <?= isset($get_query3->value) ? ($get_query3->value == 1 ? '' : 'checked') : '' ?> />
+                                  <input class=" mt-3" onclick="return cfa(<?= $row->id ?>,<?= $row2->id ?>,<?= $msme_id ?>,2)" type="radio" style="scale: 1.78;" name="options<?= $row2->id ?>" id="noradio<?= $row2->id ?>" <?= isset($get_query3->value) ? ($get_query3->value == 1 ? '' : 'checked') : '' ?> />
                                   <label class="form-check-label mt-3" for="noradio<?= $row2->id ?>">No</label>
                                 </div>
                               </div>

@@ -46,7 +46,7 @@ require_once("assets/components/templates/header.php");
 
                   <div class="col-12">
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" name="remember" value="true" id="rememberMe">
+                      <input class="" type="checkbox" name="remember" value="true" id="rememberMe">
                       <label class="form-check-label" for="rememberMe">Remember me</label>
                     </div>
                   </div>

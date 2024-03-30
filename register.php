@@ -38,28 +38,28 @@ require_once("assets/components/templates/header.php");
                                     <div class="col-lg-4 mb-3">
                                         <label for="first_name" class="form-label">First Name</label>
                                         <div class="input-group">
-                                            <span class="input-group-text"><i class="bi bi-building"></i></span>
+                                            <span class="input-group-text"><i class="bi bi-person"></i></span>
                                             <input type="text" name="first_name" class="form-control" id="first_name" required>
                                         </div>
                                     </div>
                                     <div class="col-lg-4 mb-3">
                                         <label for="middle_name" class="form-label">Middle Name</label>
                                         <div class="input-group">
-                                            <span class="input-group-text"><i class="bi bi-building"></i></span>
+                                            <span class="input-group-text"><i class="bi bi-person"></i></span>
                                             <input type="text" name="middle_name" class="form-control" id="middle_name" required>
                                         </div>
                                     </div>
                                     <div class="col-lg-4 mb-3">
                                         <label for="last_name" class="form-label">Last Name</label>
                                         <div class="input-group">
-                                            <span class="input-group-text"><i class="bi bi-building"></i></span>
+                                            <span class="input-group-text"><i class="bi bi-person"></i></span>
                                             <input type="text" name="last_name" class="form-control" id="last_name" required>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <label for="sex" class="form-label">Sex</label>
                                         <div class="input-group">
-                                            <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
+                                            <span class="input-group-text"><i class="bi bi-gender-male"></i></span>
                                             <select name="sex" class="form-select" id="sex" required>
                                                 <option selected disabled>--</option>
                                                 <option value="Male">Male</option>
@@ -70,7 +70,7 @@ require_once("assets/components/templates/header.php");
                                     <div class="col-lg-6">
                                         <label for="age" class="form-label">Age</label>
                                         <div class="input-group">
-                                            <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
+                                            <span class="input-group-text"><i class="bi bi-calendar3"></i></span>
                                             <select name="age" class="form-select" id="age" required>
                                                 <option selected disabled>--</option>
                                                 <option value="35 and Below">35 and Below</option>
@@ -82,33 +82,34 @@ require_once("assets/components/templates/header.php");
                                     <div class="col-lg-6 mb-3">
                                         <label for="phone" class="form-label">Phone</label>
                                         <div class="input-group">
-                                            <span class="input-group-text"><i class="bi bi-building"></i></span>
+                                            <span class="input-group-text"><i class="bi bi-phone"></i></span>
                                             <input type="text" name="phone" class="form-control" id="phone" required>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 mb-3">
                                         <label for="email" class="form-label">Email</label>
                                         <div class="input-group">
-                                            <span class="input-group-text"><i class="bi bi-building"></i></span>
+                                            <span class="input-group-text"><i class="bi bi-envelope"></i></span>
                                             <input type="email" name="email" class="form-control" id="email" required>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 mb-3">
                                         <label for="business_name" class="form-label">Business Name</label>
                                         <div class="input-group">
-                                            <span class="input-group-text"><i class="bi bi-building"></i></span>
+                                            <span class="input-group-text"><i class="bi bi-shop"></i></span>
                                             <input type="text" name="business_name" class="form-control" id="business_name" required>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 mb-3">
                                         <label for="province_id" class="form-label">Province</label>
                                         <div class="input-group">
-                                            <span class="input-group-text"><i class="bi bi-building"></i></span>
+                                            <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
                                             <select name="province_id" class="form-select" id="province_id" required>
                                                 <option selected disabled>--</option>
                                             </select>
                                         </div>
                                     </div>
+                                    <!-- Add more form fields as needed with appropriate Bootstrap icons -->
                                     <div class="col-lg-6 mb-3">
                                         <label for="industry_cluster_id" class="form-label">Industry Cluster</label>
                                         <div class="input-group">
@@ -152,10 +153,11 @@ require_once("assets/components/templates/header.php");
                                     <div class="col-12">
                                         <button class="btn btn-primary w-100" type="submit"><i class="bi bi-box-arrow-in-right"></i> Take assessment</button>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <!-- <p class="small mb-0 text-center"><a href="login.php">Login as admin</a></p> -->
+                                    <div class="col-lg-12">
+                                        <p class="small mb-0 text-center"><a href="assessment.php">Already registered.</a></p>
                                     </div>
                                 </form>
+
 
                             </div>
                         </div>

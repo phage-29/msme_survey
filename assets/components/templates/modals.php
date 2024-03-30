@@ -30,7 +30,7 @@
                     <hr>
                     <form id="privacy-form">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="i_agree" name="i_agree" required>
+                            <input class="" type="checkbox" value="" id="i_agree" name="i_agree" required>
                             <label class="form-check-label" for="i_agree">
                                 I agree
                             </label>

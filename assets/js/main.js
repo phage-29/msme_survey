@@ -387,6 +387,13 @@ $(document).ready(function () {
       success: function (response) {
         $("#business_name").autocomplete({
           source: response,
+          open: function () {
+            $(".ui-autocomplete").css({
+              'max-height': '150px',
+              'overflow-y': 'auto',
+              'overflow-x': 'hidden'
+            });
+          }
         });
       },
     });
