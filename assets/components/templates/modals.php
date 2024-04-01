@@ -63,7 +63,7 @@
             <div class="modal-dialog modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5">Profile</h1>
+                        <h1 class="modal-title fs-5">Update Profile</h1>
                     </div>
                     <div class="modal-body">
                         <form class="g-3 ajax-form">
