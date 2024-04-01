@@ -5,6 +5,7 @@ require_once("assets/components/templates/header.php");
 require_once("assets/components/templates/topbar.php");
 require_once("assets/components/templates/sidebar.php");
 ?>
+
 <main id="main" class="main">
 
   <div class="pagetitle">

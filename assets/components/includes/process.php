@@ -124,6 +124,104 @@ if (isset($_POST['msme_registration'])) {
   }
 }
 
+if (isset($_POST['msme_completion'])) {
+  $msme_id = $_POST['msme_id'];
+  if (isset($_POST['first_name'])) {
+    $first_name = $_POST['first_name'];
+    $query = $conn->query("UPDATE msmes SET first_name = '$first_name' WHERE id = $msme_id");
+  }
+
+  if (isset($_POST['middle_name'])) {
+    $middle_name = $_POST['middle_name'];
+    $query = $conn->query("UPDATE msmes SET middle_name = '$middle_name' WHERE id = $msme_id");
+  }
+
+  if (isset($_POST['last_name'])) {
+    $last_name = $_POST['last_name'];
+    $query = $conn->query("UPDATE msmes SET last_name = '$last_name' WHERE id = $msme_id");
+  }
+
+  if (isset($_POST['phone'])) {
+    $phone = $_POST['phone'];
+    $query = $conn->query("UPDATE msmes SET phone = '$phone' WHERE id = $msme_id");
+  }
+
+  if (isset($_POST['business_name'])) {
+    $business_name = $_POST['business_name'];
+    $query = $conn->query("UPDATE msmes SET business_name = '$business_name' WHERE id = $msme_id");
+  }
+
+  if (isset($_POST['industry_cluster_id'])) {
+    $industry_cluster_id = $_POST['industry_cluster_id'];
+    $query = $conn->query("UPDATE msmes SET industry_cluster_id = '$industry_cluster_id' WHERE id = $msme_id");
+  }
+
+  if (isset($_POST['major_business_activity_id'])) {
+    $major_business_activity_id = $_POST['major_business_activity_id'];
+    $query = $conn->query("UPDATE msmes SET major_business_activity_id = '$major_business_activity_id' WHERE id = $msme_id");
+  }
+
+  if (isset($_POST['edt_level_id'])) {
+    $edt_level_id = $_POST['edt_level_id'];
+    $query = $conn->query("UPDATE msmes SET edt_level_id = '$edt_level_id' WHERE id = $msme_id");
+  }
+
+  if (isset($_POST['asset_size_id'])) {
+    $asset_size_id = $_POST['asset_size_id'];
+    $query = $conn->query("UPDATE msmes SET asset_size_id = '$asset_size_id' WHERE id = $msme_id");
+  }
+
+  if (isset($_POST['first_name'])) {
+    $first_name = $_POST['first_name'];
+    $query = $conn->query("UPDATE msmes SET first_name = '$first_name' WHERE id = $msme_id");
+  }
+
+  if (isset($_POST['middle_name'])) {
+    $middle_name = $_POST['middle_name'];
+    $query = $conn->query("UPDATE msmes SET middle_name = '$middle_name' WHERE id = $msme_id");
+  }
+
+  if (isset($_POST['last_name'])) {
+    $last_name = $_POST['last_name'];
+    $query = $conn->query("UPDATE msmes SET last_name = '$last_name' WHERE id = $msme_id");
+  }
+
+  if (isset($_POST['phone'])) {
+    $phone = $_POST['phone'];
+    $query = $conn->query("UPDATE msmes SET phone = '$phone' WHERE id = $msme_id");
+  }
+
+  if (isset($_POST['business_name'])) {
+    $business_name = $_POST['business_name'];
+    $query = $conn->query("UPDATE msmes SET business_name = '$business_name' WHERE id = $msme_id");
+  }
+
+  if (isset($_POST['industry_cluster_id'])) {
+    $industry_cluster_id = $_POST['industry_cluster_id'];
+    $query = $conn->query("UPDATE msmes SET industry_cluster_id = '$industry_cluster_id' WHERE id = $msme_id");
+  }
+
+  if (isset($_POST['major_business_activity_id'])) {
+    $major_business_activity_id = $_POST['major_business_activity_id'];
+    $query = $conn->query("UPDATE msmes SET major_business_activity_id = '$major_business_activity_id' WHERE id = $msme_id");
+  }
+
+  if (isset($_POST['edt_level_id'])) {
+    $edt_level_id = $_POST['edt_level_id'];
+    $query = $conn->query("UPDATE msmes SET edt_level_id = '$edt_level_id' WHERE id = $msme_id");
+  }
+
+  if (isset($_POST['asset_size_id'])) {
+    $asset_size_id = $_POST['asset_size_id'];
+    $query = $conn->query("UPDATE msmes SET asset_size_id = '$asset_size_id' WHERE id = $msme_id");
+  }
+
+  $response = [
+    'status' => 'success',
+    'message' => 'Completed!',
+    'redirect' => 'success-factors.php?ref=' . $_POST["ref"]
+  ];
+}
 
 if (isset($_POST['i_agree'])) {
   try {

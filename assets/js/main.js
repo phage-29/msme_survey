@@ -164,6 +164,22 @@ $(document).ready(function () {
     });
   });
 
+  $("#update-profile-form").submit(function (e) {
+    e.preventDefault();
+
+    var formData = $(this).serialize();
+
+    $.ajax({
+      type: "POST",
+      url: "assets/components/includes/process.php",
+      data: formData,
+      dataType: "json",
+      success: function (response) {
+        $("#privacyModal").modal("hide");
+      },
+    });
+  });
+
   $("#comments-form").submit(function (e) {
     e.preventDefault();
 
