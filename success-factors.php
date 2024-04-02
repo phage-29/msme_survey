@@ -45,24 +45,8 @@ require_once("assets/components/templates/sidebar.php");
                       <div class="col-lg-6 col-md-12 col-sm-12 small text-center text-muted d-none d-lg-flex">
                         <p><strong>Criteria</strong></p>
                       </div>
-                      <div class="col-lg-6 col-md-12 col-sm-12 small text-muted d-none d-lg-flex row">
-                        <div class="col-1"></div>
-                        <div class="col-2 small text-center">
-                          <strong>Very high</strong>
-                        </div>
-                        <div class="col-2 small text-center">
-                          <strong>High</strong>
-                        </div>
-                        <div class="col-2 small text-center">
-                          <strong>Average</strong>
-                        </div>
-                        <div class="col-2 small text-center">
-                          <strong>Low</strong>
-                        </div>
-                        <div class="col-2 small text-center">
-                          <strong>Very low</strong>
-                        </div>
-                        <div class="col-1"></div>
+                      <div class="col-lg-2 col-md-12 col-sm-12 small text-muted d-none d-lg-flex row">
+                        <p><strong>Selection</strong></p>
                       </div>
                     </div>
                     <?php
@@ -75,29 +59,20 @@ require_once("assets/components/templates/sidebar.php");
                             <?= $row2->sfsm ?>
                           </p>
                         </div>
-                        <div class="col-lg-6 col-md-12 col-sm-12 row">
-                          <div class="col-1"></div>
-                          <div class="col-2 small px-lg-3 text-center">
-                            <span class="d-md-none small text-nowrap" style="font-size: 0.65rem;">Very high</span><br>
-                            <input type="radio" name="<?= $row2->sfsm_code ?>" class="" onclick="return sfa(<?= $row->id ?>,<?= $row2->id ?>,<?= $msme_id ?>,5)" style="scale: 1.75;" <?= $conn->query("SELECT * FROM responses WHERE sfm_id=$row->id and sfsm_id=$row2->id and msme_id=$msme_id and value = 5")->num_rows ? 'checked' : '' ?> required />
-                          </div>
-                          <div class="col-2 small px-lg-3 text-center">
-                            <span class="d-md-none small text-nowrap" style="font-size: 0.65rem;">High</span><br>
-                            <input type="radio" name="<?= $row2->sfsm_code ?>" class="" onclick="return sfa(<?= $row->id ?>,<?= $row2->id ?>,<?= $msme_id ?>,4)" style="scale: 1.75;" <?= $conn->query("SELECT * FROM responses WHERE sfm_id=$row->id and sfsm_id=$row2->id and msme_id=$msme_id and value = 4")->num_rows ? 'checked' : '' ?> />
-                          </div>
-                          <div class="col-2 small px-lg-3 text-center">
-                            <span class="d-md-none small text-nowrap" style="font-size: 0.65rem;">Average</span><br>
-                            <input type="radio" name="<?= $row2->sfsm_code ?>" class="" onclick="return sfa(<?= $row->id ?>,<?= $row2->id ?>,<?= $msme_id ?>,3)" style="scale: 1.75;" <?= $conn->query("SELECT * FROM responses WHERE sfm_id=$row->id and sfsm_id=$row2->id and msme_id=$msme_id and value = 3")->num_rows ? 'checked' : '' ?> />
-                          </div>
-                          <div class="col-2 small px-lg-3 text-center">
-                            <span class="d-md-none small text-nowrap" style="font-size: 0.65rem;">Low</span><br>
-                            <input type="radio" name="<?= $row2->sfsm_code ?>" class="" onclick="return sfa(<?= $row->id ?>,<?= $row2->id ?>,<?= $msme_id ?>,2)" style="scale: 1.75;" <?= $conn->query("SELECT * FROM responses WHERE sfm_id=$row->id and sfsm_id=$row2->id and msme_id=$msme_id and value = 2")->num_rows ? 'checked' : '' ?> />
-                          </div>
-                          <div class="col-2 small px-lg-3 text-center">
-                            <span class="d-md-none small text-nowrap" style="font-size: 0.65rem;">Very low</span><br>
-                            <input type="radio" name="<?= $row2->sfsm_code ?>" class="" onclick="return sfa(<?= $row->id ?>,<?= $row2->id ?>,<?= $msme_id ?>,1)" style="scale: 1.75;" <?= $conn->query("SELECT * FROM responses WHERE sfm_id=$row->id and sfsm_id=$row2->id and msme_id=$msme_id and value = 1")->num_rows ? 'checked' : '' ?> />
-                          </div>
-                          <div class="col-1"></div>
+                        <div class="col-lg-2 col-md-12 col-sm-12 row">
+                          <select class="form-select" onchange="return sfa(<?= $row->id ?>, <?= $row2->id ?>,<?= $msme_id ?>, this.value)" required>
+                            <option value="" selected disabled>-- select --</option>
+                            <option value="10" <?= $conn->query("SELECT * FROM responses WHERE sfm_id=$row->id and sfsm_id=$row2->id and msme_id=$msme_id and value = 10")->num_rows ? 'selected' : '' ?>>Very high</option>
+                            <option value="9" <?= $conn->query("SELECT * FROM responses WHERE sfm_id=$row->id and sfsm_id=$row2->id and msme_id=$msme_id and value = 9")->num_rows ? 'selected' : '' ?>>Less than Very High</option>
+                            <option value="8" <?= $conn->query("SELECT * FROM responses WHERE sfm_id=$row->id and sfsm_id=$row2->id and msme_id=$msme_id and value = 8")->num_rows ? 'selected' : '' ?>>Better than High</option>
+                            <option value="7" <?= $conn->query("SELECT * FROM responses WHERE sfm_id=$row->id and sfsm_id=$row2->id and msme_id=$msme_id and value = 7")->num_rows ? 'selected' : '' ?>>High</option>
+                            <option value="6" <?= $conn->query("SELECT * FROM responses WHERE sfm_id=$row->id and sfsm_id=$row2->id and msme_id=$msme_id and value = 6")->num_rows ? 'selected' : '' ?>>Better than Average</option>
+                            <option value="5" <?= $conn->query("SELECT * FROM responses WHERE sfm_id=$row->id and sfsm_id=$row2->id and msme_id=$msme_id and value = 5")->num_rows ? 'selected' : '' ?>>Average</option>
+                            <option value="4" <?= $conn->query("SELECT * FROM responses WHERE sfm_id=$row->id and sfsm_id=$row2->id and msme_id=$msme_id and value = 4")->num_rows ? 'selected' : '' ?>>Better than Low</option>
+                            <option value="3" <?= $conn->query("SELECT * FROM responses WHERE sfm_id=$row->id and sfsm_id=$row2->id and msme_id=$msme_id and value = 3")->num_rows ? 'selected' : '' ?>>Low</option>
+                            <option value="2" <?= $conn->query("SELECT * FROM responses WHERE sfm_id=$row->id and sfsm_id=$row2->id and msme_id=$msme_id and value = 2")->num_rows ? 'selected' : '' ?>>Better than Very Low</option>
+                            <option value="1" <?= $conn->query("SELECT * FROM responses WHERE sfm_id=$row->id and sfsm_id=$row2->id and msme_id=$msme_id and value = 1")->num_rows ? 'selected' : '' ?>>Very Low</option>
+                          </select>
                         </div>
                       </div>
                       <hr>
