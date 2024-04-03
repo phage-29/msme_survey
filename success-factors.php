@@ -10,7 +10,7 @@ require_once("assets/components/templates/sidebar.php");
 
   <div class="pagetitle">
     <h1>
-      <?= $page ?>
+      <?= $page ?> <button class="btn btn-outline-secondary float-end" data-bs-toggle="modal" data-bs-target="#success-factor-info"><i class="bi bi-info-square"></i></button>
     </h1>
     <span>
       <em>

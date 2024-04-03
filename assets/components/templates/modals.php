@@ -43,6 +43,8 @@
         !isset($get_msme->middle_name) ||
         !isset($get_msme->last_name) ||
         !isset($get_msme->phone) ||
+        !isset($get_msme->sex) ||
+        !isset($get_msme->email) ||
         !isset($get_msme->business_name) ||
         !isset($get_msme->industry_cluster_id) ||
         !isset($get_msme->major_business_activity_id) ||
@@ -52,6 +54,8 @@
         empty($get_msme->middle_name) ||
         empty($get_msme->last_name) ||
         empty($get_msme->phone) ||
+        empty($get_msme->sex) ||
+        empty($get_msme->email) ||
         empty($get_msme->business_name) ||
         empty($get_msme->industry_cluster_id) ||
         empty($get_msme->major_business_activity_id) ||
@@ -76,8 +80,6 @@
                                 </div>
                             <?php
                             }
-                            ?>
-                            <?php
                             if (!isset($get_msme->middle_name) || empty($get_msme->middle_name)) {
                             ?>
                                 <div class="mb-3">
@@ -86,8 +88,6 @@
                                 </div>
                             <?php
                             }
-                            ?>
-                            <?php
                             if (!isset($get_msme->last_name) || empty($get_msme->last_name)) {
                             ?>
                                 <div class="mb-3">
@@ -96,8 +96,6 @@
                                 </div>
                             <?php
                             }
-                            ?>
-                            <?php
                             if (!isset($get_msme->phone) || empty($get_msme->phone)) {
                             ?>
                                 <div class="mb-3">
@@ -106,8 +104,26 @@
                                 </div>
                             <?php
                             }
+                            if (!isset($get_msme->sex) || empty($get_msme->sex)) {
                             ?>
+                                <div class="mb-3">
+                                    <label for="sex" class="form-label">Sex</label>
+                                    <select name="sex" class="form-select">
+                                        <option selected disabled>--select--</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                </div>
                             <?php
+                            }
+                            if (!isset($get_msme->email) || empty($get_msme->email)) {
+                            ?>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" name="email" class="form-control" id="email" required>
+                                </div>
+                            <?php
+                            }
                             if (!isset($get_msme->business_name) || empty($get_msme->business_name)) {
                             ?>
                                 <div class="mb-3">
@@ -247,4 +263,32 @@
     <?php
     }
     ?>
+
+    <div class="modal fade" id="success-factor-info" tabindex="-1" aria-labelledby="success-factor-infoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="success-factor-infoLabel">Info</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul style="list-style-type: circle;">
+                        <li><strong>Very High:</strong><br>&emsp;-Identify aspects or criteria where performance or quality is exceptional, exceeding all expectations.<hr></li>
+                        <li><strong>Less than very high:</strong><br>&emsp;-Consider areas where performance or quality falls short of being categorized as <strong>"Very High"</strong> but still demonstrates a high level of proficiency or effectiveness.<hr></li>
+                        <li><strong>Better than High:</strong><br>&emsp;-Evaluate aspects or criteria that surpass the standard level of performance or quality typically considered<strong> "High".</strong></li>
+                        <li><strong>High:</strong><br>&emsp;-Assess areas where performance or quality meets the expected standard level of proficiency or effectiveness.<hr></li>
+                        <li><strong>Better than Average:</strong><br>&emsp;-Examine aspects or criteria that outperform what is typically considered average or typical.<hr></li>
+                        <li><strong>Average:</strong><br>&emsp;-Evaluate areas where performance or quality is at the standard level expected, neither exceeding nor falling below.<hr></li>
+                        <li><strong>Better than Low: </strong>Identify aspects or criteria that perform slightly better than what is considered below average or subpar.<hr></li>
+                        <li><strong>Low:</strong><br>&emsp;-Assess areas where performance or quality falls below the expected standard level, indicating room for improvement.<hr></li>
+                        <li><strong>Better than Very Low:</strong><br>&emsp;-Evaluate aspects or criteria that demonstrate some level of performance or quality but still fall below what is considered very poor or inadequate.<hr></li>
+                        <li><strong>Very Low:</strong><br>&emsp;-Identify areas where performance or quality is severely lacking and requires significant improvement to meet even the basic expectations.<hr></li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </modals>

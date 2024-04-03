@@ -146,6 +146,16 @@ if (isset($_POST['msme_completion'])) {
     $query = $conn->query("UPDATE msmes SET phone = '$phone' WHERE id = $msme_id");
   }
 
+  if (isset($_POST['sex'])) {
+    $sex = $_POST['sex'];
+    $query = $conn->query("UPDATE msmes SET sex = '$sex' WHERE id = $msme_id");
+  }
+
+  if (isset($_POST['email'])) {
+    $email = $_POST['email'];
+    $query = $conn->query("UPDATE msmes SET email = '$email' WHERE id = $msme_id");
+  }
+
   if (isset($_POST['business_name'])) {
     $business_name = $_POST['business_name'];
     $query = $conn->query("UPDATE msmes SET business_name = '$business_name' WHERE id = $msme_id");
