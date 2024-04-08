@@ -231,10 +231,6 @@ require_once("assets/components/templates/sidebar.php");
             Swal.close();
             $('#tbody_data').html(response);
             $('#actual_data').DataTable({
-              fixedColumns: {
-                start: 1,
-                end: 1
-              },
               dom: 'Bfrtip',
               buttons: [
                 'copy', 'excel', 'pdf'
