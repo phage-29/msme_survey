@@ -235,6 +235,7 @@ require_once("assets/components/templates/sidebar.php");
               buttons: [
                 'copy', 'excel', 'pdf'
               ],
+              paging: false,
               scrollX: true
             });
           },
