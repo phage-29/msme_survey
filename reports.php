@@ -96,6 +96,10 @@ require_once("assets/components/templates/sidebar.php");
       $(document).ready(function() {
         $('#sfm_assessment').DataTable({
           scrollX: true,
+          dom: 'Bfrtip',
+          buttons: [
+            'copy', 'excel', 'pdf'
+          ],
           paging: false
         });
       })
@@ -159,6 +163,10 @@ require_once("assets/components/templates/sidebar.php");
       $(document).ready(function() {
         $('#sfsm_assessment').DataTable({
           scrollX: true,
+          dom: 'Bfrtip',
+          buttons: [
+            'copy', 'excel', 'pdf'
+          ],
           paging: false
         });
       })
@@ -227,6 +235,10 @@ require_once("assets/components/templates/sidebar.php");
                 start: 1,
                 end: 1
               },
+              dom: 'Bfrtip',
+              buttons: [
+                'copy', 'excel', 'pdf'
+              ],
               scrollX: true
             });
           },
