@@ -18,7 +18,7 @@ $query = $conn->query("SELECT
                                 LEFT JOIN major_business_activities `mba` ON m.major_business_activity_id = `mba`.id
                                 LEFT JOIN assessment_monitoring am ON m.id = am.msme_id
                             WHERE
-                                am.scorecard = 1");
+                                am.success_factor = 1");
 while ($row = $query->fetch_object()) {
 
 ?>
