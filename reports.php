@@ -32,21 +32,23 @@ require_once("assets/components/templates/sidebar.php");
   if (isset($_GET['msme_id'])) {
     $msme_id = $_GET['msme_id'];
   ?>
-    <div class="card">
-      <div class="card-header">Success Factor Main Assessment</div>
-      <div class="card-body">
-        <table id="sfm_assessment" class="w-100">
-          <thead>
-            <tr>
-              <th>Code</th>
-              <th>Success Factor</th>
-              <th>Description</th>
-              <th>Total Average</th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php
-            $query = $conn->query("SELECT
+    <section class="section dashboard">
+      <div class="card">
+        <div class="card-header">Success Factor Main Assessment</div>
+        <div class="card-body">
+          <table id="sfm_assessment" class="w-100">
+            <thead>
+              <tr>
+                <th>Code</th>
+                <th>Success Factor</th>
+                <th>Description</th>
+                <th>Total Average</th>
+                <th>Level</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php
+              $query = $conn->query("SELECT
             s2.*,
             GREATEST (
                 AVG(mr2.very_high),
@@ -77,52 +79,53 @@ require_once("assets/components/templates/sidebar.php");
             ) mr2 ON s2.id = mr2.sfm_id
         GROUP BY
             s2.id");
-            while ($row = $query->fetch_object()) {
-            ?>
-              <tr>
-                <td><?= $row->sfm_code ?></td>
-                <td><?= $row->sfm ?></td>
-                <td><?= $row->sfm_desc ?></td>
-                <td><?= number_format($row->highest_average * 100, 2) ?>%</td>
-              </tr>
-            <?php
-            }
-            ?>
-          </tbody>
-        </table>
+              while ($row = $query->fetch_object()) {
+              ?>
+                <tr>
+                  <td><?= $row->sfm_code ?></td>
+                  <td><?= $row->sfm ?></td>
+                  <td><?= $row->sfm_desc ?></td>
+                  <td><?= number_format($row->highest_average * 100, 2) ?>%</td>
+                  <td><?= $row->highest_average * 100 >= 81 && $row->highest_average * 100 <= 100 ? 'Very High' : ($row->highest_average * 100 >= 61 && $row->highest_average * 100 <= 80 ? 'High' : ($row->highest_average * 100 >= 41 && $row->highest_average * 100 <= 60 ? 'Average' : ($row->highest_average * 100 >= 21 && $row->highest_average * 100 <= 40 ? 'Low' : ($row->highest_average * 100 >= 0 && $row->highest_average * 100 <= 20 ? 'Very Low' : '')))) ?></td>
+                </tr>
+              <?php
+              }
+              ?>
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
-    <script>
-      $(document).ready(function() {
-        $('#sfm_assessment').DataTable({
-          scrollX: true,
-          dom: 'Bfrtip',
-          buttons: [
-            'copy', 'excel', 'pdf'
-          ],
-          paging: false
-        });
-      })
-    </script>
+      <script>
+        $(document).ready(function() {
+          $('#sfm_assessment').DataTable({
+            scrollX: true,
+            dom: 'Bfrtip',
+            buttons: [
+              'copy', 'excel', 'pdf'
+            ],
+            paging: false
+          });
+        })
+      </script>
 
-    <div class="card">
-      <div class="card-header">Success Factor Sub Main Assessment</div>
-      <div class="card-body">
-        <table id="sfsm_assessment" class="w-100">
-          <thead>
-            <tr>
-              <th>Success Factor Main</th>
-              <th>Success Factor Sub Main</th>
-              <th>Very High</th>
-              <th>High</th>
-              <th>Average</th>
-              <th>Low</th>
-              <th>Very Low</th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php
-            $query = $conn->query("select
+      <div class="card">
+        <div class="card-header">Success Factor Sub Main Assessment</div>
+        <div class="card-body">
+          <table id="sfsm_assessment" class="w-100">
+            <thead>
+              <tr>
+                <th>Success Factor Main</th>
+                <th>Success Factor Sub Main</th>
+                <th>Very High</th>
+                <th>High</th>
+                <th>Average</th>
+                <th>Low</th>
+                <th>Very Low</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php
+              $query = $conn->query("select
             r.msme_id,
             r.sfm_id,
             s.sfm,
@@ -141,36 +144,37 @@ require_once("assets/components/templates/sidebar.php");
         WHERE
             assessment_type_id = 1
             AND msme_id = $msme_id");
-            while ($row = $query->fetch_object()) {
-            ?>
-              <tr>
-                <td><?= $row->sfm ?></td>
-                <td><?= $row->sfsm ?></td>
-                <td><?= $row->very_high ?></td>
-                <td><?= $row->high ?></td>
-                <td><?= $row->average ?></td>
-                <td><?= $row->low ?></td>
-                <td><?= $row->very_low ?></td>
-              </tr>
-            <?php
-            }
-            ?>
-          </tbody>
-        </table>
+              while ($row = $query->fetch_object()) {
+              ?>
+                <tr>
+                  <td><?= $row->sfm ?></td>
+                  <td><?= $row->sfsm ?></td>
+                  <td><?= $row->very_high ?></td>
+                  <td><?= $row->high ?></td>
+                  <td><?= $row->average ?></td>
+                  <td><?= $row->low ?></td>
+                  <td><?= $row->very_low ?></td>
+                </tr>
+              <?php
+              }
+              ?>
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
-    <script>
-      $(document).ready(function() {
-        $('#sfsm_assessment').DataTable({
-          scrollX: true,
-          dom: 'Bfrtip',
-          buttons: [
-            'copy', 'excel', 'pdf'
-          ],
-          paging: false
-        });
-      })
-    </script>
+      <script>
+        $(document).ready(function() {
+          $('#sfsm_assessment').DataTable({
+            scrollX: true,
+            dom: 'Bfrtip',
+            buttons: [
+              'copy', 'excel', 'pdf'
+            ],
+            paging: false
+          });
+        })
+      </script>
+    </section>
   <?php
   } else {
   ?>
