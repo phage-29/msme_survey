@@ -37,7 +37,14 @@
       <?php
       }
     } else {
-      ?><li class="nav-item">
+      ?>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="analytics.php">
+          <i class="bi bi-check-circle"></i>
+          <span>Analytics</span>
+        </a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link collapsed" href="reports.php">
           <i class="bi bi-check-circle"></i>
           <span>Reports</span>

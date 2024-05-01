@@ -1,8 +1,6 @@
 <?php
 require_once 'assets/components/includes/conn.php';
 
-ini_set('session.cookie_secure', 1);
-ini_set('session.cookie_httponly', 1);
 
 session_start();
 
@@ -17,12 +15,12 @@ if ($protected == true) {
 
         $_SESSION['last_activity'] = time();
 
-        $query = "SELECT *
-        FROM users u
-        LEFT JOIN divisions d ON u.division_id = d.id
-        LEFT JOIN client_types ct ON u.client_type_id = ct.id
-        LEFT JOIN roles r ON u.role_id = r.id
-        WHERE u.id = ? AND u.active = 1";
+        $query = "SELECT * FROM users u";
+        $query .= "LEFT JOIN divisions d ON u.division_id = d.id";
+        $query .= "LEFT JOIN client_types ct ON u.client_type_id = ct.id";
+        $query .= "LEFT JOIN roles r ON u.role_id = r.id";
+        $query .= "WHERE u.id = ? AND u.active = 1";
+
         $result = $conn->execute_query($query, [$_SESSION['id']]);
 
         if ($result && $result->num_rows > 0) {

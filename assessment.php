@@ -7,7 +7,6 @@ require_once("assets/components/templates/header.php");
 ?>
 <main>
     <div class="container">
-
         <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
             <div class="container">
                 <div class="row justify-content-center">
@@ -61,6 +60,26 @@ require_once("assets/components/templates/header.php");
                                     </div>
                                     <div class="col-12">
                                         <p class="small mb-0 text-center"><a href="register.php">Not registered</a></p>
+                                        <p class="small mb-0 text-center"><a href="#" data-bs-toggle="modal" data-bs-target="#adminLogin">Login as admin</a></p>
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="adminLogin" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        ...
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </form>
 

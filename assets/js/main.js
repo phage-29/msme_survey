@@ -391,7 +391,9 @@ $(document).ready(function () {
    * List of business names
    */
   $("#province_id").on("change", function () {
-    var province_id = $("#province_id").val();
+    var province_id = $(this).val();
+    var selectWidth = $(this).outerWidth(); // Get the width of the select input
+
     $.ajax({
       url: "assets/components/includes/fetch.php",
       method: "POST",
@@ -407,11 +409,13 @@ $(document).ready(function () {
             $(".ui-autocomplete").css({
               'max-height': '150px',
               'overflow-y': 'auto',
-              'overflow-x': 'hidden'
+              'overflow-x': 'hidden',
+              'width': selectWidth + 'px' // Set the width to match the select input
             });
           }
         });
       },
     });
   });
+
 });
