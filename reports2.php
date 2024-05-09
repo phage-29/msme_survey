@@ -187,27 +187,15 @@ require_once("assets/components/templates/sidebar.php");
                 <div class="card">
                     <div class="card-title"></div>
                     <div class="card-body">
-                        <table id="actual_data" class="table small table-stripped">
+                        <table class="table small table-stripped">
                             <thead>
                                 <tr>
-                                    <th class="text-nowrap">MSME No</th>
-                                    <th class="text-nowrap">Province</th>
-                                    <th class="text-nowrap">MSME</th>
-                                    <th class="text-nowrap">Client</th>
-                                    <th class="text-nowrap">Sex</th>
-                                    <th class="text-nowrap">Age</th>
-                                    <th class="text-nowrap">Mobile No</th>
-                                    <th class="text-nowrap">Email</th>
-                                    <th class="text-nowrap">Industry Cluster</th>
-                                    <th class="text-nowrap">Asset Size</th>
-                                    <th class="text-nowrap">Stage of Business Operation</th>
-                                    <th class="text-nowrap">Major Business Activity</th>
+                                    <th class="text-nowrap">MSME_ID</th>
                                     <?php
                     $get_main = $conn->query("SELECT * FROM sfms");
                     while ($get_main_row = $get_main->fetch_object()) {
 ?>
-                                    <th class="text-nowrap"><?= $get_main_row->sfm_code ?></th>
-                                    <th class="text-nowrap"><?= $get_main_row->sfm_code ?> scale rating</th>
+                                    <th class="text-nowrap"><?= $get_main_row->sfm ?></th>
                                     <?php
                     }
                     ?>
@@ -236,7 +224,7 @@ require_once("assets/components/templates/sidebar.php");
             },
         });
         $.ajax({
-            url: 'fetch_data.php',
+            url: 'fetch_data2.php',
             method: 'GET',
             dataType: 'html',
             success: function(response) {
