@@ -228,14 +228,14 @@ require_once("assets/components/templates/sidebar.php");
     </section>
     <script>
     $(document).ready(function() {
-        Swal.fire({
-            title: "Loading",
-            html: "Please wait...",
-            allowOutsideClick: false,
-            didOpen: function() {
-                Swal.showLoading();
-            },
-        });
+        // Swal.fire({
+        //     title: "Loading",
+        //     html: "Please wait...",
+        //     allowOutsideClick: false,
+        //     didOpen: function() {
+        //         Swal.showLoading();
+        //     },
+        // });
         $.ajax({
             url: 'fetch_data.php',
             method: 'GET',
