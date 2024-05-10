@@ -80,3 +80,4 @@ function decryptID($encrypted, $key)
 }
 
 
+echo encryptID(1305, 'marketintel');

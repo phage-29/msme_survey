@@ -211,7 +211,7 @@
                 })
             </script>
         <?php
-        } else {
+        }
         ?>
             <!-- Modal -->
             <div class="modal fade" id="privacyModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="privacyModalLabel" aria-hidden="true">
@@ -263,7 +263,7 @@
             </div>
     <?php
         }
-    }
+    
     ?>
 
     <div class="modal fade" id="success-factor-info" tabindex="-1" aria-labelledby="success-factor-infoLabel" aria-hidden="true">
