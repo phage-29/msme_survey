@@ -104,6 +104,7 @@ while ($row = $query->fetch_object()) {
                     ?>
                     <td class="text-nowrap"><?= number_format(array_sum($tot_score)/count($tot_score), 4) ?></td>
                     <td class="text-nowrap"><?= number_format(array_sum($tot_score_percentage)/count($tot_score_percentage), 2) ?></td>
+                    <td class="text-nowrap"><?= $row->comments_suggestions ?></td>
 </tr>
 <?php
 }

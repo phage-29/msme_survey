@@ -27,7 +27,7 @@ require_once("assets/components/templates/header.php");
                   <p class="text-center small">Enter your username & password to login</p>
                 </div>
 
-                <form class="row g-3 needs-validation" novalidate>
+                <form class="row g-3 needs-validation" data-toggle="validator" novalidate>
 
                   <div class="col-12">
                     <label for="yourUsername" class="form-label">Username</label>
@@ -62,10 +62,6 @@ require_once("assets/components/templates/header.php");
             </div>
 
             <div class="credits">
-              <!-- All the links in the footer should remain intact. -->
-              <!-- You can delete the links only if you purchased the pro version. -->
-              <!-- Licensing information: https://bootstrapmade.com/license/ -->
-              <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
               Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
             </div>
 

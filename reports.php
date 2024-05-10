@@ -213,6 +213,7 @@ require_once("assets/components/templates/sidebar.php");
                     ?>
                                     <th class="text-nowrap">Score</th>
                                     <th class="text-nowrap">%</th>
+                                    <th class="text-nowrap">Comments & Reccomendations</th>
                                 </tr>
                             </thead>
                             <tbody id="tbody_data">
