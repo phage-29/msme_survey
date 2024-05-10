@@ -73,7 +73,7 @@ require_once("assets/components/templates/header.php");
                                                     <strong class="h4">Main Success Factors</strong>
                                                 </div>
                                                 <div class="card-body pt-3">
-                                                    <div id="radarChart"></div>
+                                                    <div id="radarChart" style="width: 100%"></div>
                                                 </div>
                                             </div>
 
@@ -176,13 +176,12 @@ require_once("assets/components/templates/header.php");
                                                         data: [<?php echo implode(',', $chartData); ?>],
                                                     }],
                                                     chart: {
-                                                        height: 350,
+                                                        height: 430,
                                                         type: 'radar',
                                                     },
                                                     title: {
                                                         text: 'OVERALL SCORE: <?= number_format(array_sum($chartData) / count($chartData), 2) ?>%',
-                                                        align: 'center',
-                                                        offsetY: 325
+                                                        align: 'center'
                                                     },
                                                     dataLabels: {
                                                         enabled: true,
@@ -406,10 +405,10 @@ require_once("assets/components/templates/header.php");
                                                         $result = $conn->execute_query($query, $range);
                                                         if ($result->num_rows) {
                                                             while ($row = $result->fetch_object()) {
-                                                                echo "<li>" . $row->sfm . " <span class='float-end'>" . number_format($row->percentage_score, 2) . "%</span></li>";
+                                                                echo "<li class='border border-0 border-bottom'>" . $row->sfm . " <span class='float-end'>" . number_format($row->percentage_score, 2) . "%</span></li>";
                                                             }
                                                         } else {
-                                                            echo "<li><em>You don't have " . ucfirst($range[0] == 0 ? "Low" : ($range[0] == 75 ? "Average" : "High")) . " Success Factor</em></li>";
+                                                            echo "<li class='border border-0 border-bottom'><em>You do not have " . ucfirst($range[0] == 0 ? "Low" : ($range[0] == 75 ? "Average" : "High")) . " Success Factor</em></li>";
                                                         }
                                                     }
                                                     $query = "
@@ -642,8 +641,20 @@ require_once("assets/components/templates/header.php");
                                             </div>
                                         </div>
                                     </div>
-
-
+                                    <div class="col-md-12">
+                                            <div class="card border border-1">
+                                                <div class="card-header p-2" style="background-color:#eaeff8;">
+                                                    <strong class="h4">
+                                                        Summary Findings
+                                                    </strong>
+                                                </div>
+                                                <div class="card-body pt-3 small">
+                                                <p class="lh-base">
+                                                    [Business Name] with Code: [MSME Code] has a
+                                                </p>
+                                                </div>
+                                            </div>
+                                        </div>
                                 </div>
                             </div>
 
