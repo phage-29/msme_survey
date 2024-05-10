@@ -22,7 +22,7 @@ while ($row = $query->fetch_object()) {
 <tr>
     <td class="text-nowrap"><?= $row->msme_code ?></td>
     <td class="text-nowrap"><?= $row->province ?></td>
-    <td class="text-nowrap"><?= $row->business_name ?></td>
+    <td class="text-nowrap"><a href="scorecard.php?ref=<?= encryptID($row->id,secret_key) ?>" target="blank_"><?= $row->business_name ?></a></td>
     <td class="text-nowrap"><?= $row->first_name ?> <?= $row->middle_name ?> <?= $row->last_name ?></td>
     <td class="text-nowrap"><?= $row->sex ?></td>
     <td class="text-nowrap"><?= $row->age ?></td>
