@@ -124,6 +124,77 @@ if (isset($_POST['msme_registration'])) {
   }
 }
 
+if (isset($_POST['msme_validation'])) {
+  $province_id = $_POST['province_id'];
+  $business_name = $_POST['business_name'];
+
+  $query = "SELECT * FROM msmes WHERE province_id = ? AND business_name = ?";
+  $result = $conn->execute_query($query, [$province_id, $business_name]);
+
+  if ($result->num_rows) {
+    while ($row = $result->fetch_object()) {
+      $msme_id = $row->id;
+      $query = "SELECT * FROM assessment_monitoring WHERE msme_id=?";
+      $assessment_result = $conn->execute_query($query, [$msme_id]);
+
+      if ($assessment_result->num_rows == 0) {
+        $insert_query = "INSERT INTO assessment_monitoring(`msme_id`, `success_factor`) VALUES(?, 1)";
+        $insert_result = $conn->execute_query($insert_query, [$msme_id]);
+        $response = [
+          'status' => 'success',
+          'message' => 'MSME validated!',
+          'redirect' => 'success-factors.php?ref=' . encryptID($msme_id, secret_key)
+        ];
+      } else {
+        $get_ass = $assessment_result->fetch_object();
+        if ($get_ass->scorecard == 1) {
+          $response = [
+            'status' => 'warning',
+            'message' => 'The MSME has already undergone assessment!'
+          ];
+        } else {
+          $response = [
+            'status' => 'success',
+            'message' => 'MSME validated!',
+            'redirect' => 'success-factors.php?ref=' . encryptID($msme_id, secret_key)
+          ];
+        }
+      }
+    }
+  } else {
+    $response = [
+      'status' => 'warning',
+      'message' => 'Failed to validate MSME!'
+    ];
+  }
+}
+
+if (isset($_POST['admin_registration'])) {
+  $username = $_POST['username'];
+  $email = $_POST['email'];
+  $password = $_POST['password'];
+  $password = password_hash($password, PASSWORD_DEFAULT);
+  $active = 1;
+  $role_id = 1;
+
+  $query2 = $conn->query("SELECT * FROM users WHERE username = '$username' OR email = '$email'");
+  if (!$query2->num_rows) {
+    $query = "INSERT INTO `users` (`username`, `email`, `password`, `active`, `role_id`) VALUES(?, ?, ?, ?, ?)";
+    $result = $conn->execute_query($query, [$username, $email, $password, $active, $role_id]);
+    $response = [
+      'status' => 'warning',
+      'message' => 'Admin registered.',
+      'redirect' => 'admin.php'
+    ];
+    
+  } else {
+    $response = [
+      'status' => 'warning',
+      'message' => 'Admin Already registered.'
+    ];
+  }
+}
+
 if (isset($_POST['msme_completion'])) {
   $msme_id = $_POST['msme_id'];
   if (isset($_POST['first_name'])) {

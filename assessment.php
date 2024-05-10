@@ -24,9 +24,7 @@ require_once("assets/components/templates/header.php");
                                 </div><!-- End Logo -->
 
                                 <div class="pt-1 pb-2">
-                                    <h6 class="card-title text-center pb-0 fs-6">INTEGRATED MSME MANAGEMENT INFORMATION
-                                        SYSTEM
-                                        MARKET INTELLIGENCE MODULE
+                                    <h6 class="card-title text-center pb-0 fs-6">INTEGRATED MSME MANAGEMENT INFORMATION SYSTEM MARKET INTELLIGENCE
                                     </h6>
                                     <p class="text-center small pt-2">This Market Intelligence (MI) Tool is a combination of
                                         various assessment tools that aim to raise business awareness of MSMEs. After

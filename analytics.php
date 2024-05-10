@@ -123,7 +123,18 @@ require_once("assets/components/templates/sidebar.php");
                       series: [{
                         data: [
                           <?php
-                          $query = $conn->query("SELECT COUNT(p.province) AS data_value FROM msmes m LEFT JOIN provinces p ON m.province_id = p.id LEFT JOIN assessment_monitoring am ON m.id = am.msme_id WHERE am.id IS NOT NULL AND p.province IS NOT NULL GROUP BY p.province");
+                          $query = $conn->query("SELECT p.province, COUNT(amm.id) AS data_value
+                          FROM provinces p
+                              LEFT JOIN (
+                                  SELECT m.id, m.province_id
+                                  FROM
+                                      assessment_monitoring am
+                                      LEFT JOIN msmes m ON am.msme_id = m.id
+                                  WHERE
+                                      am.swot = 1
+                              ) amm ON p.id = amm.province_id
+                          GROUP BY
+                              p.province;");
                           while ($row = $query->fetch_object()) {
                             echo $row->data_value . ',';
                           }
@@ -190,7 +201,18 @@ require_once("assets/components/templates/sidebar.php");
                       xaxis: {
                         categories: [
                           <?php
-                          $query = $conn->query("SELECT p.province FROM msmes m LEFT JOIN provinces p ON m.province_id = p.id LEFT JOIN assessment_monitoring am ON m.id = am.msme_id WHERE am.id IS NOT NULL AND p.province IS NOT NULL GROUP BY p.province");
+                          $query = $conn->query("SELECT p.province, COUNT(amm.id) AS data_value
+                          FROM provinces p
+                              LEFT JOIN (
+                                  SELECT m.id, m.province_id
+                                  FROM
+                                      assessment_monitoring am
+                                      LEFT JOIN msmes m ON am.msme_id = m.id
+                                  WHERE
+                                      am.swot = 1
+                              ) amm ON p.id = amm.province_id
+                          GROUP BY
+                              p.province;");
                           while ($row = $query->fetch_object()) {
                             echo '"' . $row->province . '",';
                           }
@@ -226,7 +248,18 @@ require_once("assets/components/templates/sidebar.php");
                     var options = {
                       series: [
                         <?php
-                        $query = $conn->query("SELECT COUNT(p.industry_cluster) AS data_value FROM msmes m LEFT JOIN industry_clusters p ON m.industry_cluster_id = p.id LEFT JOIN assessment_monitoring am ON m.id = am.msme_id WHERE am.id IS NOT NULL AND p.industry_cluster IS NOT NULL GROUP BY p.industry_cluster");
+                        $query = $conn->query("SELECT ic.industry_cluster, COUNT(amm.id) AS data_value
+                        FROM industry_clusters ic
+                            LEFT JOIN (
+                                SELECT m.id, m.industry_cluster_id
+                                FROM
+                                    assessment_monitoring am
+                                    LEFT JOIN msmes m ON am.msme_id = m.id
+                                WHERE
+                                    am.swot = 1
+                            ) amm ON ic.id = amm.industry_cluster_id
+                        GROUP BY
+                            ic.industry_cluster;");
                         while ($row = $query->fetch_object()) {
                           echo $row->data_value . ',';
                         }
@@ -282,7 +315,18 @@ require_once("assets/components/templates/sidebar.php");
                       },
                       labels: [
                         <?php
-                        $query = $conn->query("SELECT p.industry_cluster FROM msmes m LEFT JOIN industry_clusters p ON m.industry_cluster_id = p.id LEFT JOIN assessment_monitoring am ON m.id = am.msme_id WHERE am.id IS NOT NULL AND p.industry_cluster IS NOT NULL GROUP BY p.industry_cluster");
+                        $query = $conn->query("SELECT ic.industry_cluster, COUNT(amm.id) AS data_value
+                        FROM industry_clusters ic
+                            LEFT JOIN (
+                                SELECT m.id, m.industry_cluster_id
+                                FROM
+                                    assessment_monitoring am
+                                    LEFT JOIN msmes m ON am.msme_id = m.id
+                                WHERE
+                                    am.swot = 1
+                            ) amm ON ic.id = amm.industry_cluster_id
+                        GROUP BY
+                            ic.industry_cluster;");
                         while ($row = $query->fetch_object()) {
                           echo '"' . $row->industry_cluster . '",';
                         }
@@ -339,7 +383,18 @@ require_once("assets/components/templates/sidebar.php");
                     var options = {
                       series: [
                         <?php
-                        $query = $conn->query("SELECT COUNT(p.major_business_activity) AS data_value FROM msmes m LEFT JOIN major_business_activities p ON m.major_business_activity_id = p.id LEFT JOIN assessment_monitoring am ON m.id = am.msme_id WHERE am.id IS NOT NULL AND p.major_business_activity IS NOT NULL GROUP BY p.major_business_activity");
+                        $query = $conn->query("SELECT mba.major_business_activity, COUNT(amm.id) AS data_value
+                        FROM major_business_activities mba
+                            LEFT JOIN (
+                                SELECT m.id, m.major_business_activity_id
+                                FROM
+                                    assessment_monitoring am
+                                    LEFT JOIN msmes m ON am.msme_id = m.id
+                                WHERE
+                                    am.swot = 1
+                            ) amm ON mba.id = amm.major_business_activity_id
+                        GROUP BY
+                            mba.major_business_activity;");
                         while ($row = $query->fetch_object()) {
                           echo $row->data_value . ',';
                         }
@@ -401,7 +456,18 @@ require_once("assets/components/templates/sidebar.php");
                       },
                       labels: [
                         <?php
-                        $query = $conn->query("SELECT p.major_business_activity FROM msmes m LEFT JOIN major_business_activities p ON m.major_business_activity_id = p.id LEFT JOIN assessment_monitoring am ON m.id = am.msme_id WHERE am.id IS NOT NULL AND p.major_business_activity IS NOT NULL GROUP BY p.major_business_activity");
+                        $query = $conn->query("SELECT mba.major_business_activity, COUNT(amm.id) AS data_value
+                        FROM major_business_activities mba
+                            LEFT JOIN (
+                                SELECT m.id, m.major_business_activity_id
+                                FROM
+                                    assessment_monitoring am
+                                    LEFT JOIN msmes m ON am.msme_id = m.id
+                                WHERE
+                                    am.swot = 1
+                            ) amm ON mba.id = amm.major_business_activity_id
+                        GROUP BY
+                            mba.major_business_activity;");
                         while ($row = $query->fetch_object()) {
                           echo '"' . $row->major_business_activity . '",';
                         }
@@ -458,7 +524,18 @@ require_once("assets/components/templates/sidebar.php");
                     var options = {
                       series: [
                         <?php
-                        $query = $conn->query("SELECT COUNT(p.asset_size) AS data_value FROM msmes m LEFT JOIN asset_sizes p ON m.asset_size_id = p.id LEFT JOIN assessment_monitoring am ON m.id = am.msme_id WHERE am.id IS NOT NULL AND p.asset_size IS NOT NULL GROUP BY p.asset_size");
+                        $query = $conn->query("SELECT ass.asset_size, COUNT(amm.id) AS data_value
+                        FROM asset_sizes ass
+                            LEFT JOIN (
+                                SELECT m.id, m.asset_size_id
+                                FROM
+                                    assessment_monitoring am
+                                    LEFT JOIN msmes m ON am.msme_id = m.id
+                                WHERE
+                                    am.swot = 1
+                            ) amm ON ass.id = amm.asset_size_id
+                        GROUP BY
+                            ass.asset_size;");
                         while ($row = $query->fetch_object()) {
                           echo $row->data_value . ',';
                         }
@@ -514,7 +591,18 @@ require_once("assets/components/templates/sidebar.php");
                       },
                       labels: [
                         <?php
-                        $query = $conn->query("SELECT p.asset_size FROM msmes m LEFT JOIN asset_sizes p ON m.asset_size_id = p.id LEFT JOIN assessment_monitoring am ON m.id = am.msme_id WHERE am.id IS NOT NULL AND p.asset_size IS NOT NULL GROUP BY p.asset_size");
+                        $query = $conn->query("SELECT ass.asset_size, COUNT(amm.id) AS data_value
+                        FROM asset_sizes ass
+                            LEFT JOIN (
+                                SELECT m.id, m.asset_size_id
+                                FROM
+                                    assessment_monitoring am
+                                    LEFT JOIN msmes m ON am.msme_id = m.id
+                                WHERE
+                                    am.swot = 1
+                            ) amm ON ass.id = amm.asset_size_id
+                        GROUP BY
+                            ass.asset_size;");
                         while ($row = $query->fetch_object()) {
                           echo '"' . $row->asset_size . '",';
                         }
@@ -572,7 +660,19 @@ require_once("assets/components/templates/sidebar.php");
                       series: [{
                         data: [
                           <?php
-                          $query = $conn->query("SELECT el.edt_level_code, count(el.edt_level) AS data_value FROM msmes m LEFT JOIN edt_levels el ON m.edt_level_id = el.id LEFT JOIN assessment_monitoring am ON m.id = am.msme_id WHERE am.id IS NOT NULL AND el.edt_level IS NOT NULL GROUP BY el.edt_level");
+                          $query = $conn->query("SELECT 
+                          el.edt_level_code, COUNT(amm.id) AS data_value
+                      FROM
+                          edt_levels el
+                              LEFT JOIN
+                          (SELECT 
+                              m.id, m.edt_level_id
+                          FROM
+                              assessment_monitoring am
+                          LEFT JOIN msmes m ON am.msme_id = m.id
+                          WHERE
+                              am.swot = 1) amm ON el.id = amm.edt_level_id
+                      GROUP BY el.edt_level_code");
                           while ($row = $query->fetch_object()) {
                           ?> {
                               x: '<?= $row->edt_level_code ?>',

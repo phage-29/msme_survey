@@ -37,3 +37,10 @@ require_once("assets/components/includes/msme.php");
 </head>
 
 <body>
+
+<!-- Loading Overlay -->
+<div id="loading-overlay" class="loading-overlay d-flex justify-content-center align-items-center">
+    <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>

@@ -118,7 +118,7 @@ $(document).ready(function () {
       allowOutsideClick: false,
       didOpen: function () {
         Swal.showLoading();
-      },
+      }
     });
 
     var formData = $(this).serialize();
@@ -134,7 +134,7 @@ $(document).ready(function () {
             icon: response.status,
             title: response.message,
             showConfirmButton: false,
-            timer: 1000,
+            timer: 1000
           }).then(function () {
             if (response.redirect) {
               window.location.href = response.redirect;
@@ -144,7 +144,7 @@ $(document).ready(function () {
             }
           });
         }, 1000);
-      },
+      }
     });
   });
 
@@ -160,7 +160,7 @@ $(document).ready(function () {
       dataType: "json",
       success: function (response) {
         $("#privacyModal").modal("hide");
-      },
+      }
     });
   });
 
@@ -176,7 +176,7 @@ $(document).ready(function () {
       dataType: "json",
       success: function (response) {
         $("#privacyModal").modal("hide");
-      },
+      }
     });
   });
 
@@ -193,7 +193,7 @@ $(document).ready(function () {
       success: function (response) {
         $("#suggestionsModal").modal("hide");
         $("#scf-form").submit();
-      },
+      }
     });
   });
 
@@ -213,12 +213,12 @@ $(document).ready(function () {
       url: "assets/components/includes/process.php",
       data: {
         ref: $("#ref").val(),
-        sfa_complete: "",
+        sfa_complete: ""
       },
       dataType: "json",
       success: function (response) {
         window.location.href = response.redirect;
-      },
+      }
     });
   });
 
@@ -238,12 +238,12 @@ $(document).ready(function () {
       url: "assets/components/includes/process.php",
       data: {
         ref: $("#ref").val(),
-        saa_complete: "",
+        saa_complete: ""
       },
       dataType: "json",
       success: function (response) {
         window.location.href = response.redirect;
-      },
+      }
     });
   });
 
@@ -263,12 +263,12 @@ $(document).ready(function () {
       url: "assets/components/includes/process.php",
       data: {
         ref: $("#ref").val(),
-        cfa_complete: "",
+        cfa_complete: ""
       },
       dataType: "json",
       success: function (response) {
         window.location.href = response.redirect;
-      },
+      }
     });
   });
 
@@ -284,7 +284,7 @@ $(document).ready(function () {
     url: "assets/components/includes/fetch.php",
     type: "POST",
     data: {
-      get_provinces: true,
+      get_provinces: true
     },
     dataType: "json",
     success: function (response) {
@@ -296,7 +296,7 @@ $(document).ready(function () {
           "<option value='" + id + "'>" + province + "</option>"
         );
       }
-    },
+    }
   });
 
   /**
@@ -306,7 +306,7 @@ $(document).ready(function () {
     url: "assets/components/includes/fetch.php",
     type: "POST",
     data: {
-      get_industry_clusters: true,
+      get_industry_clusters: true
     },
     dataType: "json",
     success: function (response) {
@@ -318,7 +318,7 @@ $(document).ready(function () {
           "<option value='" + id + "'>" + industry_cluster + "</option>"
         );
       }
-    },
+    }
   });
 
   /**
@@ -328,7 +328,7 @@ $(document).ready(function () {
     url: "assets/components/includes/fetch.php",
     type: "POST",
     data: {
-      get_major_business_activities: true,
+      get_major_business_activities: true
     },
     dataType: "json",
     success: function (response) {
@@ -340,7 +340,7 @@ $(document).ready(function () {
           "<option value='" + id + "'>" + major_business_activity + "</option>"
         );
       }
-    },
+    }
   });
 
   /**
@@ -350,7 +350,7 @@ $(document).ready(function () {
     url: "assets/components/includes/fetch.php",
     type: "POST",
     data: {
-      get_edt_levels: true,
+      get_edt_levels: true
     },
     dataType: "json",
     success: function (response) {
@@ -362,7 +362,7 @@ $(document).ready(function () {
           "<option value='" + id + "'>" + edt_level + "</option>"
         );
       }
-    },
+    }
   });
 
   /**
@@ -372,7 +372,7 @@ $(document).ready(function () {
     url: "assets/components/includes/fetch.php",
     type: "POST",
     data: {
-      get_asset_sizes: true,
+      get_asset_sizes: true
     },
     dataType: "json",
     success: function (response) {
@@ -384,7 +384,7 @@ $(document).ready(function () {
           "<option value='" + id + "'>" + asset_size + "</option>"
         );
       }
-    },
+    }
   });
 
   /**
@@ -399,7 +399,7 @@ $(document).ready(function () {
       method: "POST",
       data: {
         province_id: province_id,
-        get_business_names: true,
+        get_business_names: true
       },
       dataType: "json",
       success: function (response) {
@@ -407,15 +407,32 @@ $(document).ready(function () {
           source: response,
           open: function () {
             $(".ui-autocomplete").css({
-              'max-height': '150px',
-              'overflow-y': 'auto',
-              'overflow-x': 'hidden',
-              'width': selectWidth + 'px' // Set the width to match the select input
+              "max-height": "150px",
+              "overflow-y": "auto",
+              "overflow-x": "hidden",
+              width: selectWidth + "px" // Set the width to match the select input
             });
           }
         });
-      },
+      }
     });
   });
 
+  if (!localStorage.getItem("overlayShown")) {
+    $("#loading-overlay").show();
+
+    localStorage.setItem("overlayShown", true);
+
+    setTimeout(function () {
+      $("#loading-overlay").fadeOut(function () {
+        $(this).remove();
+      });
+    }, 750);
+  } else {
+    setTimeout(function () {
+      $("#loading-overlay").fadeOut(function () {
+        $(this).remove();
+      });
+    }, 1000);
+  }
 });
