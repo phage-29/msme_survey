@@ -1,17 +1,4 @@
 <modals>
-
-    <script>
-        $(document).ready(function() {
-            <?php
-            if ($am_row->privacy != 1) {
-            ?>
-                $('#privacyModal').modal('show');
-            <?php
-            }
-            ?>
-        });
-    </script>
-
     <div class="modal fade" id="suggestionsModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="suggestionsModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -209,6 +196,20 @@
                     $('#updateProfile').modal('show');
 
                 })
+            </script>
+        <?php
+        } else {
+        ?>
+            <script>
+                $(document).ready(function() {
+                    <?php
+                    if ($am_row->privacy != 1) {
+                    ?>
+                        $('#privacyModal').modal('show');
+                    <?php
+                    }
+                    ?>
+                });
             </script>
         <?php
         }
