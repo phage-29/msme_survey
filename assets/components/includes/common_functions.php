@@ -78,5 +78,3 @@ function decryptID($encrypted, $key)
 
     return $decrypted;
 }
-
-
