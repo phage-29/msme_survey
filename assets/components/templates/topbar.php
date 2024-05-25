@@ -17,13 +17,9 @@
             <li class="nav-item dropdown pe-3">
 
                 <?php
-                if ($protected == true) {
+                if ($page == 'Reports' || $page == 'Analytics') {
                     ?>
-                    
-                    <?php
-                } else {
-                    ?>
-                    <!-- <button class="btn btn-primary"><i class="bi bi-person-circle"></i> Admin</button> -->
+                    <a class="btn btn-primary" href="assets/components/includes/logout.php">Logout</a>
                     <?php
                 }
                 ?>

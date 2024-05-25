@@ -186,11 +186,59 @@ if (isset($_POST['admin_registration'])) {
       'message' => 'Admin registered.',
       'redirect' => 'admin.php'
     ];
-    
+
   } else {
     $response = [
       'status' => 'warning',
       'message' => 'Admin Already registered.'
+    ];
+  }
+}
+
+if (isset($_POST['admin_login'])) {
+
+  $username = $_POST['username'];
+  $password = $_POST['password'];
+
+  $query = "SELECT * FROM users WHERE username = ?";
+  $result = $conn->execute_query($query, [$username]);
+
+  if ($result && $result->num_rows === 1) {
+    $row = $result->fetch_object();
+
+    if (password_verify($password, $row->password)) {
+      if ($row->role_id == 1) {
+        if ($row->active == 1) {
+
+          $_SESSION['id'] = $row->id;
+
+          $response = [
+            'status' => 'success',
+            'message' => 'login successful.',
+            'redirect' => 'analytics.php'
+          ];
+        } else {
+          $response = [
+            'status' => 'warning',
+            'message' => 'Account not activated!'
+          ];
+        }
+      } else {
+        $response = [
+          'status' => 'warning',
+          'message' => 'Account has no Admin access!'
+        ];
+      }
+    } else {
+      $response = [
+        'status' => 'warning',
+        'message' => 'Invalid password!'
+      ];
+    }
+  } else {
+    $response = [
+      'status' => 'warning',
+      'message' => 'Username or Email not found!'
     ];
   }
 }

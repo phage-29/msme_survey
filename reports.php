@@ -226,16 +226,9 @@ require_once("assets/components/templates/sidebar.php");
 
         </div>
     </section>
+
     <script>
     $(document).ready(function() {
-        // Swal.fire({
-        //     title: "Loading",
-        //     html: "Please wait...",
-        //     allowOutsideClick: false,
-        //     didOpen: function() {
-        //         Swal.showLoading();
-        //     },
-        // });
         $.ajax({
             url: 'fetch_data.php',
             method: 'GET',

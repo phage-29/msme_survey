@@ -1,9 +1,9 @@
 <?php
-$page = "Reports";
+$page = "Analytics";
 $protected = true;
-require_once("assets/components/templates/header.php");
-require_once("assets/components/templates/topbar.php");
-require_once("assets/components/templates/sidebar.php");
+require_once ("assets/components/templates/header.php");
+require_once ("assets/components/templates/topbar.php");
+require_once ("assets/components/templates/sidebar.php");
 ?>
 <main id="main" class="main">
 
@@ -14,14 +14,14 @@ require_once("assets/components/templates/sidebar.php");
         <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
         <?php
         if (isset($_GET['msme_id'])) {
-        ?>
+          ?>
           <li class="breadcrumb-item"><a href="reports.php"><?= $page ?></a></li>
           <li class="breadcrumb-item active"><?= $_GET['msme_id'] ?></li>
-        <?php
+          <?php
         } else {
-        ?>
+          ?>
           <li class="breadcrumb-item active"><?= $page ?></li>
-        <?php
+          <?php
         }
         ?>
       </ol>
@@ -45,7 +45,7 @@ require_once("assets/components/templates/sidebar.php");
 
                 <div class="d-flex align-items-center">
                   <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                    <i class="bi bi-cart"></i>
+                  <i class="bi bi-people-fill"></i>
                   </div>
                   <div class="ps-3">
                     <h6><?= $conn->query("SELECT * FROM assessment_monitoring")->num_rows ?></h6>
@@ -67,7 +67,7 @@ require_once("assets/components/templates/sidebar.php");
 
                 <div class="d-flex align-items-center">
                   <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                    <i class="bi bi-currency-dollar"></i>
+                  <i class="bi bi-people-fill"></i>
                   </div>
                   <div class="ps-3">
                     <h6><?= $conn->query("SELECT * FROM assessment_monitoring WHERE scorecard = 1")->num_rows ?></h6>
@@ -90,10 +90,11 @@ require_once("assets/components/templates/sidebar.php");
 
                 <div class="d-flex align-items-center">
                   <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                    <i class="bi bi-people"></i>
+                  <i class="bi bi-people-fill"></i>
                   </div>
                   <div class="ps-3">
-                    <h6><?= $conn->query("SELECT * FROM assessment_monitoring WHERE scorecard IS NULL")->num_rows ?></h6>
+                    <h6><?= $conn->query("SELECT * FROM assessment_monitoring WHERE scorecard IS NULL")->num_rows ?>
+                    </h6>
 
                   </div>
                 </div>
@@ -189,7 +190,7 @@ require_once("assets/components/templates/sidebar.php");
                         type: 'bar',
                         height: 350
                       },
-                      plotOptions: {
+                     plotOptions: {
                         bar: {
                           borderRadius: 4,
                           horizontal: true,
@@ -221,7 +222,7 @@ require_once("assets/components/templates/sidebar.php");
                       }
                     };
 
-                    var chart = new ApexCharts(document.querySelector("#perProvince"), options);
+                      var chart = new ApexCharts(document.querySelector("#perProvince"), options);
                     chart.render();
                   });
                 </script>
@@ -275,7 +276,7 @@ require_once("assets/components/templates/sidebar.php");
                             }) {
                               console.log(event)
                             }
-                          }
+                            }
                         },
                         toolbar: {
                           show: true,
@@ -487,7 +488,7 @@ require_once("assets/components/templates/sidebar.php");
                                   console.log(event)
                                 }
                               }
-                            },
+                              },
                             width: 200
                           },
                           legend: {
@@ -544,7 +545,7 @@ require_once("assets/components/templates/sidebar.php");
                       chart: {
                         events: {
                           events: {
-                            markerClick: function(event, chartContext, {
+                            markerClick: function  (event, chartContext, {
                               seriesIndex,
                               dataPointIndex,
                               config
@@ -674,11 +675,11 @@ require_once("assets/components/templates/sidebar.php");
                               am.swot = 1) amm ON el.id = amm.edt_level_id
                       GROUP BY el.edt_level_code");
                           while ($row = $query->fetch_object()) {
-                          ?> {
-                              x: '<?= $row->edt_level_code ?>',
-                              y: <?= $row->data_value ?>
-                            },
-                          <?php
+                            ?> {
+                                  x: '<?= $row->edt_level_code ?>',
+                                  y: <?= $row->data_value ?>
+                                },
+                              <?php
                           }
                           ?>
                         ]
@@ -727,6 +728,6 @@ require_once("assets/components/templates/sidebar.php");
 
 </main><!-- End #main -->
 <?php
-require_once("assets/components/templates/modals.php");
-require_once("assets/components/templates/footer.php");
+require_once ("assets/components/templates/modals.php");
+require_once ("assets/components/templates/footer.php");
 ?>
